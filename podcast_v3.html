@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>יקיר כהן הפקות | הקמת פודקאסט</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a3a5f;
+            --accent: #c5a059;
+            --accent-glow: rgba(197,160,89,0.3);
+            --bg: #F4F4F6;
+            --surface: #fff;
+            --success: #25D366;
+            --text-main: #2C2C2C;
+            --text-muted: #666;
+            --radius: 16px;
+            --shadow: 0 8px 24px rgba(0,0,0,0.06);
+            --error: #e53935;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        body { font-family:'Heebo',sans-serif; background:var(--bg); color:var(--text-main); line-height:1.5; padding-bottom:180px; }
+
+        /* ── Progress Bar ── */
+        .progress-container { position:fixed; top:0; left:0; width:100%; height:4px; background:#ddd; z-index:2000; }
+        .progress-bar { height:100%; background:var(--accent); width:0%; transition:width 0.4s ease; }
+
+        /* ── Header ── */
+        .header { text-align:center; padding:50px 20px 10px; background:linear-gradient(180deg,#fff 0%,var(--bg) 100%); }
+        .header h1 { font-size:2.2rem; font-weight:900; color:var(--primary); margin-bottom:8px; line-height:1.1; }
+        .header h1 span { color:var(--accent); }
+        .header p { color:var(--text-muted); max-width:500px; margin:0 auto; font-size:1.05rem; }
+
+        /* ── VAT Notice ── */
+        .vat-notice {
+            text-align:center; font-size:0.8rem; color:var(--text-muted);
+            background:#fffbf0; border:1px solid #ffe082; border-radius:10px;
+            padding:8px 16px; max-width:400px; margin:10px auto 0;
+            display:flex; align-items:center; justify-content:center; gap:6px;
+        }
+
+        /* ── Step Title ── */
+        .step-title {
+            text-align:center; font-size:0.95rem; font-weight:700; text-transform:uppercase;
+            letter-spacing:1px; color:var(--text-muted); margin:28px 0 14px;
+            display:flex; align-items:center; justify-content:center; gap:10px;
+        }
+        .step-title::before,.step-title::after { content:''; height:1px; width:30px; background:#ddd; }
+
+        /* ── Package Cards ── */
+        .packages-wrapper {
+            display:flex; gap:15px; padding:0 20px 20px;
+            overflow-x:auto; scroll-snap-type:x mandatory;
+            -ms-overflow-style:none; scrollbar-width:none;
+        }
+        .packages-wrapper::-webkit-scrollbar { display:none; }
+        .scroll-hint { text-align:center; font-size:0.8rem; color:var(--text-muted); margin:-8px 0 10px; animation:bounce-x 1.2s infinite; transition:opacity 0.4s; }
+        .scroll-hint.hidden { opacity:0; pointer-events:none; }
+        @keyframes bounce-x { 0%,100%{transform:translateX(0)} 50%{transform:translateX(-5px)} }
+
+        .pkg-card {
+            min-width:280px; flex:1; background:var(--surface); border-radius:var(--radius);
+            padding:25px; border:2px solid transparent; box-shadow:var(--shadow);
+            cursor:pointer; transition:0.3s; scroll-snap-align:center;
+            position:relative; display:flex; flex-direction:column; justify-content:space-between;
+        }
+        .pkg-card.active { border-color:var(--primary); background:#f8fbff; transform:scale(1.02); }
+        .pkg-card.vip { background:#111; color:#fff; border-color:#333; }
+        .pkg-card.vip.active { border-color:var(--accent); box-shadow:0 0 20px var(--accent-glow); }
+        .pkg-card.vip h3,.pkg-card.vip .price { color:var(--accent); }
+        .pkg-card.vip li { color:#ccc; }
+        .pkg-badge {
+            position:absolute; top:-10px; left:50%; transform:translateX(-50%);
+            background:var(--accent); color:#fff; padding:4px 12px;
+            border-radius:20px; font-size:0.8rem; font-weight:700; white-space:nowrap;
+        }
+        .pkg-header h3 { font-size:1.4rem; margin-bottom:4px; }
+        .pkg-desc { font-size:0.9rem; color:var(--text-muted); margin-bottom:4px; }
+        .pkg-duration { font-size:0.8rem; color:var(--accent); font-weight:700; margin-bottom:12px; }
+        .price { font-size:2rem; font-weight:900; margin-bottom:4px; }
+        .price-vat { font-size:0.75rem; color:var(--text-muted); margin-bottom:12px; }
+        .features { list-style:none; font-size:0.88rem; margin-bottom:20px; }
+        .features li { margin-bottom:7px; display:flex; align-items:center; gap:8px; }
+        .features li i { color:var(--success); flex-shrink:0; }
+        .btn-pick {
+            width:100%; padding:12px; border-radius:10px; border:none;
+            font-weight:700; font-size:1rem; background:#eee; color:var(--text-main);
+            transition:0.2s; cursor:pointer; font-family:'Heebo',sans-serif;
+        }
+        .pkg-card.active .btn-pick { background:var(--primary); color:#fff; }
+        .pkg-card.vip.active .btn-pick { background:var(--accent); color:#000; }
+
+        /* ── Included Badge ── */
+        .included-badge {
+            display:none; align-items:center; gap:5px;
+            background:#e8f5e9; color:#2e7d32; padding:3px 9px;
+            border-radius:20px; font-size:0.72rem; font-weight:700; border:1px solid #a5d6a7;
+        }
+
+        /* ── Configurator ── */
+        #configurator {
+            display:none; background:#fff; border-radius:30px 30px 0 0;
+            box-shadow:0 -10px 30px rgba(0,0,0,0.05); padding:30px 20px;
+            animation:slideUp 0.5s cubic-bezier(0.165,0.84,0.44,1); margin-top:20px;
+        }
+        @keyframes slideUp { from{transform:translateY(50px);opacity:0} to{transform:translateY(0);opacity:1} }
+        .config-grid { display:grid; grid-template-columns:1fr; gap:12px; }
+
+        /* ── Option Cards ── */
+        .option-card {
+            display:flex; align-items:center; justify-content:space-between;
+            background:#f9f9f9; padding:15px; border-radius:12px;
+            border:1px solid #eee; cursor:pointer; transition:0.2s;
+            -webkit-user-select:none; user-select:none;
+        }
+        .option-card:active { transform:scale(0.98); }
+        .option-card.selected { background:#f0f7ff; border-color:var(--primary); }
+        .option-card.vip-included { opacity:0.65; cursor:default; pointer-events:none; background:#f0fff0; border-color:#a5d6a7; }
+        .opt-info { display:flex; align-items:center; gap:13px; }
+        .opt-icon { width:40px; height:40px; background:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.2rem; box-shadow:0 2px 5px rgba(0,0,0,0.05); flex-shrink:0; }
+        .opt-text h4 { font-size:0.97rem; font-weight:700; margin-bottom:2px; }
+        .opt-text p { font-size:0.78rem; color:var(--text-muted); }
+        .opt-right { text-align:left; display:flex; flex-direction:column; align-items:flex-end; gap:6px; }
+        .opt-price { font-weight:700; color:var(--primary); font-size:0.92rem; }
+        .toggle-switch { width:50px; height:28px; background:#ddd; border-radius:50px; position:relative; transition:0.3s; flex-shrink:0; }
+        .toggle-switch::after { content:''; position:absolute; top:2px; left:2px; width:24px; height:24px; background:#fff; border-radius:50%; transition:0.3s; box-shadow:0 2px 4px rgba(0,0,0,0.2); }
+        .option-card.selected .toggle-switch { background:var(--success); }
+        .option-card.selected .toggle-switch::after { left:24px; }
+
+        /* ── Section Divider ── */
+        .section-divider { font-size:0.85rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.8px; margin:24px 0 10px; padding-bottom:6px; border-bottom:1px solid #eee; }
+
+        /* ── Catering Panel ── */
+        .catering-panel { background:#fffbf0; border:1px solid #ffe082; border-radius:20px; padding:20px; margin-top:0; }
+        .catering-panel .cp-header { display:flex; align-items:center; gap:10px; margin-bottom:4px; }
+        .catering-panel h4 { font-size:1rem; font-weight:700; }
+        .catering-panel .cp-sub { font-size:0.82rem; color:var(--text-muted); margin-bottom:14px; }
+        .catering-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+        .catering-item {
+            background:#fff; border:1.5px solid #eee; border-radius:12px;
+            padding:12px 10px; text-align:center; cursor:pointer; transition:0.2s;
+            -webkit-user-select:none; user-select:none;
+        }
+        .catering-item:active { transform:scale(0.97); }
+        .catering-item.selected { border-color:var(--accent); background:#fffbf0; }
+        .catering-item .ci-emoji { font-size:1.6rem; display:block; margin-bottom:4px; }
+        .catering-item .ci-name { font-size:0.82rem; font-weight:700; display:block; }
+        .catering-item .ci-price { font-size:0.78rem; color:var(--accent); font-weight:700; }
+        .catering-custom { margin-top:10px; }
+        .catering-custom input {
+            width:100%; padding:10px 14px; border-radius:10px; border:1.5px solid #eee;
+            font-family:'Heebo',sans-serif; font-size:0.9rem; background:#fff;
+            direction:rtl; outline:none; transition:0.2s;
+        }
+        .catering-custom input:focus { border-color:var(--accent); }
+
+        /* ── Guests Panel ── */
+        .guests-panel {
+            background:var(--primary); color:#fff; padding:25px;
+            border-radius:20px; text-align:center; margin-top:0;
+            position:relative; overflow:hidden;
+        }
+        .guests-panel::before { content:''; position:absolute; top:-50%; right:-50%; width:200px; height:200px; background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 70%); }
+        .guests-panel h4 { font-size:1.1rem; margin-bottom:4px; position:relative; }
+        .guests-info-label { font-size:0.8rem; opacity:0.7; margin-bottom:10px; position:relative; }
+        .guests-max-notice { font-size:0.78rem; opacity:0.6; margin-top:6px; position:relative; }
+        .visual-singers { font-size:1.5rem; margin:10px 0; letter-spacing:5px; min-height:40px; position:relative; }
+        .counter-controls { display:flex; align-items:center; justify-content:center; gap:20px; position:relative; }
+        .btn-circle { width:50px; height:50px; border-radius:50%; border:2px solid rgba(255,255,255,0.3); background:transparent; color:#fff; font-size:1.5rem; cursor:pointer; transition:0.2s; font-family:'Heebo',sans-serif; }
+        .btn-circle:hover { background:rgba(255,255,255,0.2); }
+        .btn-circle:disabled { opacity:0.3; cursor:not-allowed; }
+        .count-display { font-size:2.5rem; font-weight:900; min-width:40px; position:relative; }
+        .guest-warning { background:rgba(0,0,0,0.2); padding:10px; border-radius:10px; font-size:0.85rem; margin-top:15px; display:none; position:relative; }
+
+        /* ── Remote Guest ── */
+        .remote-option {
+            display:flex; align-items:center; justify-content:space-between;
+            background:rgba(255,255,255,0.1); padding:12px 15px; border-radius:12px;
+            margin-top:14px; cursor:pointer; transition:0.2s; position:relative;
+            border:1px solid rgba(255,255,255,0.15);
+        }
+        .remote-option.selected { background:rgba(255,255,255,0.2); border-color:rgba(255,255,255,0.4); }
+        .remote-option .ro-text { text-align:right; }
+        .remote-option .ro-text h5 { font-size:0.92rem; font-weight:700; }
+        .remote-option .ro-text p { font-size:0.75rem; opacity:0.75; }
+        .remote-option .ro-right { display:flex; flex-direction:column; align-items:flex-end; gap:5px; }
+        .ro-price { font-size:0.88rem; font-weight:700; color:var(--accent); }
+        .toggle-switch-white { width:44px; height:25px; background:rgba(255,255,255,0.3); border-radius:50px; position:relative; transition:0.3s; flex-shrink:0; }
+        .toggle-switch-white::after { content:''; position:absolute; top:2px; left:2px; width:21px; height:21px; background:#fff; border-radius:50%; transition:0.3s; box-shadow:0 1px 3px rgba(0,0,0,0.3); }
+        .remote-option.selected .toggle-switch-white { background:var(--success); }
+        .remote-option.selected .toggle-switch-white::after { left:21px; }
+
+        /* ── Revisions Panel ── */
+        .revisions-panel { background:#f4f0ff; border:1px solid #c5b8f0; border-radius:16px; padding:16px 18px; margin-top:0; }
+        .revisions-panel .rp-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+        .revisions-panel h4 { font-size:0.95rem; font-weight:700; }
+        .revisions-panel .rp-sub { font-size:0.8rem; color:var(--text-muted); margin-bottom:10px; }
+        .revisions-btns { display:flex; gap:8px; }
+        .rev-btn { flex:1; padding:9px; border-radius:10px; border:1.5px solid #c5b8f0; background:#fff; font-family:'Heebo',sans-serif; font-size:0.85rem; font-weight:700; cursor:pointer; transition:0.2s; color:var(--text-main); text-align:center; }
+        .rev-btn.active { background:#7c3aed; color:#fff; border-color:#7c3aed; }
+
+        /* ── Media Format Panel ── */
+        .media-panel { background:#f0f9ff; border:1px solid #b3d9f7; border-radius:16px; padding:16px 18px; margin-top:0; }
+        .media-panel h4 { font-size:0.95rem; font-weight:700; margin-bottom:4px; }
+        .media-panel .mp-sub { font-size:0.8rem; color:var(--text-muted); margin-bottom:10px; }
+        .media-options { display:flex; gap:8px; flex-wrap:wrap; }
+        .media-opt-btn { padding:8px 14px; border-radius:10px; border:1.5px solid #b3d9f7; background:#fff; font-family:'Heebo',sans-serif; font-size:0.82rem; font-weight:700; cursor:pointer; transition:0.2s; color:var(--text-main); }
+        .media-opt-btn.active { background:#0284c7; color:#fff; border-color:#0284c7; }
+
+        /* ── SD Card Upsell ── */
+        .sd-option {
+            display:flex; align-items:center; justify-content:space-between;
+            background:#f0f9ff; border:1.5px solid #b3d9f7; border-radius:12px;
+            padding:13px 15px; cursor:pointer; transition:0.2s; margin-top:8px;
+        }
+        .sd-option.selected { background:#e0f2fe; border-color:#0284c7; }
+        .sd-opt-info { display:flex; align-items:center; gap:12px; }
+        .sd-opt-info .opt-icon { background:#fff; }
+        .sd-opt-text h5 { font-size:0.92rem; font-weight:700; }
+        .sd-opt-text p { font-size:0.75rem; color:var(--text-muted); }
+
+        /* ── Topic Input ── */
+        .topic-section { background:#f9f9f9; border-radius:20px; padding:20px; border:1px solid #eee; }
+        .topic-section .ts-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:4px; }
+        .topic-section h4 { font-size:1rem; font-weight:700; display:flex; align-items:center; gap:8px; }
+        .topic-section .ts-sub { font-size:0.82rem; color:var(--text-muted); margin-bottom:12px; }
+        .topic-input {
+            width:100%; padding:12px 15px; border-radius:12px; border:1.5px solid #ddd;
+            font-size:0.95rem; font-family:'Heebo',sans-serif; background:#fff;
+            color:var(--text-main); transition:0.2s; direction:rtl; resize:none; outline:none;
+        }
+        .topic-input:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(26,58,95,0.08); }
+        .topic-row { display:flex; align-items:center; justify-content:space-between; margin-top:6px; }
+        .topic-char-count { font-size:0.72rem; color:var(--text-muted); }
+        .btn-ai-helper { background:none; border:1px solid #c5b8f0; border-radius:20px; padding:5px 12px; font-family:'Heebo',sans-serif; font-size:0.75rem; font-weight:700; color:#7c3aed; cursor:pointer; display:flex; align-items:center; gap:5px; transition:0.2s; }
+        .btn-ai-helper:hover { background:#f4f0ff; }
+
+        /* ── AI Helper Popup ── */
+        .ai-popup {
+            position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:4000;
+            display:flex; align-items:flex-end; opacity:0; pointer-events:none; transition:opacity 0.3s;
+        }
+        .ai-popup.show { opacity:1; pointer-events:all; }
+        .ai-sheet { width:100%; background:#fff; border-radius:30px 30px 0 0; padding:28px 22px 40px; transform:translateY(100%); transition:transform 0.4s cubic-bezier(0.165,0.84,0.44,1); max-height:80vh; overflow-y:auto; }
+        .ai-popup.show .ai-sheet { transform:translateY(0); }
+        .ai-handle { width:40px; height:4px; background:#ddd; border-radius:4px; margin:0 auto 18px; }
+        .ai-title { font-size:1.1rem; font-weight:900; color:var(--primary); margin-bottom:4px; }
+        .ai-sub { font-size:0.85rem; color:var(--text-muted); margin-bottom:16px; }
+        .ai-input-row { display:flex; gap:8px; margin-bottom:16px; }
+        .ai-topic-input { flex:1; padding:11px 14px; border-radius:12px; border:1.5px solid #ddd; font-family:'Heebo',sans-serif; font-size:0.9rem; direction:rtl; outline:none; }
+        .ai-topic-input:focus { border-color:#7c3aed; }
+        .btn-generate { padding:11px 16px; background:#7c3aed; color:#fff; border:none; border-radius:12px; font-family:'Heebo',sans-serif; font-weight:700; cursor:pointer; white-space:nowrap; }
+        .questions-list { display:none; }
+        .questions-list.show { display:block; }
+        .q-item { background:#f9f9f9; border-radius:10px; padding:12px 14px; margin-bottom:8px; font-size:0.88rem; cursor:pointer; border:1px solid #eee; transition:0.2s; display:flex; align-items:center; gap:10px; }
+        .q-item:hover { background:#f0f7ff; border-color:var(--primary); }
+        .q-item i { color:var(--primary); flex-shrink:0; }
+        .ai-close { margin-top:12px; text-align:center; font-size:0.82rem; color:var(--text-muted); cursor:pointer; padding:8px; }
+
+        /* ── Day Picker ── */
+        .day-section { background:#f9f9f9; border-radius:20px; padding:20px; border:1px solid #eee; }
+        .day-section h4 { font-size:1rem; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+        .days-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+        .day-btn { padding:10px 8px; border-radius:10px; border:1.5px solid #ddd; background:#fff; font-family:'Heebo',sans-serif; font-size:0.83rem; font-weight:600; color:var(--text-muted); cursor:pointer; transition:0.2s; text-align:center; }
+        .day-btn:hover { border-color:var(--primary); color:var(--primary); }
+        .day-btn.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+        .day-btn.active .day-sub { color:rgba(255,255,255,0.7); }
+        .day-sub { display:block; font-size:0.68rem; font-weight:400; margin-top:2px; }
+
+        /* ── Social Proof ── */
+        .social-proof { background:#fff; border-radius:20px; padding:20px; border:1px solid #eee; }
+        .social-proof h4 { font-size:0.9rem; font-weight:700; color:var(--text-muted); text-align:center; margin-bottom:14px; }
+        .podcasts-grid { display:flex; flex-direction:column; gap:10px; }
+        .podcast-item { display:flex; align-items:center; gap:12px; padding:10px 12px; background:#f9f9f9; border-radius:12px; }
+        .podcast-avatar { width:42px; height:42px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1.1rem; flex-shrink:0; }
+        .podcast-text .pt-name { font-size:0.88rem; font-weight:700; }
+        .podcast-text .pt-show { font-size:0.78rem; color:var(--text-muted); }
+        .stars-small { display:flex; gap:2px; margin-top:2px; }
+
+        /* ── Trust / Guarantee ── */
+        .guarantee-banner { background:linear-gradient(135deg,#1a3a5f,#2a5298); border-radius:20px; padding:20px; color:#fff; }
+        .gb-row { display:flex; align-items:flex-start; gap:12px; margin-bottom:10px; }
+        .gb-row:last-child { margin-bottom:0; }
+        .gb-icon { font-size:1.4rem; flex-shrink:0; margin-top:2px; }
+        .gb-text h5 { font-size:0.92rem; font-weight:700; margin-bottom:2px; }
+        .gb-text p { font-size:0.8rem; opacity:0.8; }
+
+        /* ── Referral ── */
+        .referral-section { background:#f0fff0; border:1.5px solid #a5d6a7; border-radius:16px; padding:16px 18px; }
+        .referral-section .rs-header { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+        .referral-section h4 { font-size:0.92rem; font-weight:700; }
+        .referral-section p { font-size:0.8rem; color:var(--text-muted); margin-bottom:10px; }
+        .referral-toggle { display:flex; align-items:center; gap:10px; }
+        .referral-toggle input { flex:1; padding:9px 12px; border-radius:10px; border:1.5px solid #a5d6a7; font-family:'Heebo',sans-serif; font-size:0.88rem; direction:rtl; outline:none; background:#fff; }
+        .referral-toggle input:focus { border-color:var(--success); }
+
+        /* ── Retainer Hint ── */
+        .retainer-hint { background:linear-gradient(135deg,var(--primary),#2a5298); border-radius:20px; padding:22px; color:#fff; text-align:center; position:relative; overflow:hidden; }
+        .retainer-hint::before { content:''; position:absolute; top:-30px; left:-30px; width:120px; height:120px; background:radial-gradient(circle,rgba(197,160,89,0.25) 0%,transparent 70%); }
+        .retainer-hint .rh-badge { background:var(--accent); color:#000; font-size:0.75rem; font-weight:700; padding:3px 10px; border-radius:20px; display:inline-block; margin-bottom:8px; }
+        .retainer-hint h4 { font-size:1.1rem; font-weight:700; margin-bottom:5px; position:relative; }
+        .retainer-hint p { font-size:0.84rem; opacity:0.85; margin-bottom:14px; position:relative; }
+        .btn-retainer { display:inline-flex; align-items:center; gap:8px; background:var(--accent); color:#000; font-weight:700; font-size:0.9rem; padding:10px 22px; border-radius:50px; text-decoration:none; font-family:'Heebo',sans-serif; }
+
+        /* ── Sticky Footer ── */
+        .sticky-footer {
+            position:fixed; bottom:0; left:0; width:100%;
+            background:rgba(255,255,255,0.97); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+            box-shadow:0 -5px 20px rgba(0,0,0,0.08); padding:12px 20px; z-index:1000;
+            display:flex; align-items:center; justify-content:space-between;
+            border-top:1px solid #eee; transform:translateY(100%); transition:transform 0.4s ease;
+        }
+        .sticky-footer.visible { transform:translateY(0); }
+        .total-container { cursor:pointer; }
+        .total-label { font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:5px; }
+        .total-vat-note { font-size:0.65rem; color:var(--text-muted); opacity:0.8; }
+        .total-price { font-size:1.75rem; font-weight:900; color:var(--primary); line-height:1; }
+        .btn-wa {
+            background:var(--success); color:#fff; text-decoration:none; border:none;
+            padding:13px 22px; border-radius:50px; font-weight:700; font-size:0.95rem;
+            display:flex; align-items:center; gap:8px;
+            box-shadow:0 4px 15px rgba(37,211,102,0.4); animation:pulse-green 2s infinite;
+            white-space:nowrap; font-family:'Heebo',sans-serif; cursor:pointer;
+        }
+        @keyframes pulse-green { 0%{box-shadow:0 0 0 0 rgba(37,211,102,0.7)} 70%{box-shadow:0 0 0 10px rgba(37,211,102,0)} 100%{box-shadow:0 0 0 0 rgba(37,211,102,0)} }
+
+        /* ── Details Popup ── */
+        .details-popup {
+            position:fixed; bottom:85px; right:20px; left:20px; max-width:320px; margin:0 auto;
+            background:#fff; padding:16px; border-radius:14px; box-shadow:0 5px 30px rgba(0,0,0,0.15);
+            display:none; font-size:0.88rem; z-index:999; border:1px solid #eee;
+            max-height:70vh; overflow-y:auto;
+        }
+        .details-popup.show { display:block; animation:fadeIn 0.2s ease; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+        .details-row { display:flex; justify-content:space-between; margin-bottom:5px; color:#555; gap:8px; }
+        .details-row.final { border-top:1px solid #eee; margin-top:7px; padding-top:7px; font-weight:700; color:#000; }
+        .details-close { text-align:center; margin-top:8px; font-size:0.78rem; color:var(--text-muted); cursor:pointer; }
+
+        /* ── Confirm Sheet ── */
+        .confirm-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:3000; display:flex; align-items:flex-end; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+        .confirm-overlay.show { opacity:1; pointer-events:all; }
+        .confirm-sheet { width:100%; background:#fff; border-radius:30px 30px 0 0; padding:28px 22px 40px; transform:translateY(100%); transition:transform 0.4s cubic-bezier(0.165,0.84,0.44,1); max-height:90vh; overflow-y:auto; }
+        .confirm-overlay.show .confirm-sheet { transform:translateY(0); }
+        .confirm-handle { width:40px; height:4px; background:#ddd; border-radius:4px; margin:0 auto 18px; }
+        .confirm-title { font-size:1.3rem; font-weight:900; color:var(--primary); margin-bottom:4px; }
+        .confirm-subtitle { font-size:0.88rem; color:var(--text-muted); margin-bottom:18px; }
+        .confirm-summary { background:#f8fbff; border-radius:14px; padding:14px; border:1px solid #dde8f5; margin-bottom:18px; }
+        .cs-row { display:flex; justify-content:space-between; font-size:0.88rem; margin-bottom:5px; color:#555; gap:8px; }
+        .cs-row.total { font-weight:900; font-size:1.1rem; color:var(--primary); padding-top:8px; border-top:1px solid #dde8f5; margin-top:4px; }
+
+        /* ── Validation ── */
+        .field-error { font-size:0.78rem; color:var(--error); margin-top:5px; display:none; }
+        .field-error.show { display:block; }
+        .input-error { border-color:var(--error) !important; }
+        .missing-chip { background:#fff3f3; border:1px solid #ffcdd2; border-radius:8px; padding:8px 12px; font-size:0.82rem; color:var(--error); margin-bottom:14px; display:none; }
+        .missing-chip.show { display:block; }
+
+        /* ── Confirm Buttons ── */
+        .confirm-btns { display:flex; gap:10px; }
+        .btn-confirm-back { flex:1; padding:14px; border-radius:12px; border:1.5px solid #ddd; background:transparent; font-family:'Heebo',sans-serif; font-size:0.95rem; font-weight:700; cursor:pointer; color:var(--text-muted); }
+        .btn-confirm-go { flex:2; padding:14px; border-radius:12px; border:none; background:var(--success); color:#fff; font-family:'Heebo',sans-serif; font-size:0.95rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 15px rgba(37,211,102,0.4); }
+
+        /* ── Accessibility Info ── */
+        .access-banner { display:flex; gap:12px; padding:14px 16px; background:#f0f9ff; border:1px solid #b3d9f7; border-radius:14px; flex-wrap:wrap; }
+        .access-item { display:flex; align-items:center; gap:6px; font-size:0.8rem; color:var(--text-main); }
+        .access-item i { color:#0284c7; }
+
+        /* ── Responsive ── */
+        @media (min-width:768px) {
+            .packages-wrapper { justify-content:center; overflow:visible; }
+            #configurator { max-width:800px; margin:20px auto 0; border-radius:30px; }
+            .config-grid { grid-template-columns:1fr 1fr; }
+            .days-grid { grid-template-columns:repeat(6,1fr); }
+            .details-popup { right:20px; left:auto; bottom:90px; }
+            .confirm-overlay { align-items:center; }
+            .confirm-sheet { border-radius:30px; max-width:500px; margin:0 auto; }
+            .ai-popup { align-items:center; }
+            .ai-sheet { border-radius:30px; max-width:500px; margin:0 auto; }
+            .catering-grid { grid-template-columns:repeat(4,1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-container"><div class="progress-bar" id="pBar"></div></div>
+
+<!-- ════ HEADER ════ -->
+<header class="header">
+    <h1>הפודקאסט שלך.<br><span>העולם מקשיב.</span></h1>
+    <p>אולפן פודקאסטים מתקדם במודיעין — אודיו, וידאו ומיתוג במקום אחד</p>
+    <!-- ① VAT Notice -->
+    <div class="vat-notice">
+        <i class="fa-solid fa-circle-info"></i>
+        כל המחירים אינם כוללים מע"מ (18%)
+    </div>
+</header>
+
+<div class="step-title">שלב 1: בחירת פורמט</div>
+
+<!-- ════ PACKAGES ════ -->
+<div class="packages-wrapper">
+
+    <!-- Audio Only -->
+    <div class="pkg-card" data-pkg-id="audio" data-pkg-price="950" data-default-guests="1" onclick="selectPkg(this)">
+        <div class="pkg-header">
+            <h3>🎙️ Audio Only</h3>
+            <p class="pkg-desc">הקלטת סאונד מקצועית</p>
+            <!-- ⑥ Duration clarified -->
+            <p class="pkg-duration">⏱️ עד שעה באולפן</p>
+            <div class="price">₪950</div>
+            <div class="price-vat">+ מע"מ | ₪1,111 סה"כ</div>
+            <ul class="features">
+                <li><i class="fa-solid fa-check"></i> ציוד קצה עליון</li>
+                <li><i class="fa-solid fa-check"></i> מיקס ומאסטרינג לשידור</li>
+                <li><i class="fa-solid fa-check"></i> קובץ מוכן להפצה</li>
+                <li><i class="fa-solid fa-check"></i> חומרי גלם מהמצלמה (SD)</li>
+            </ul>
+        </div>
+        <button class="btn-pick">בחרתי בזה</button>
+    </div>
+
+    <!-- Vodcast Pro -->
+    <div class="pkg-card active" data-pkg-id="vodcast" data-pkg-price="1650" data-default-guests="2" onclick="selectPkg(this)">
+        <div class="pkg-badge">הכי מבוקש 🔥</div>
+        <div class="pkg-header">
+            <h3>🎬 Vodcast Pro</h3>
+            <p class="pkg-desc">הפקה מלאה: וידאו + אודיו</p>
+            <!-- ⑥ Duration clarified -->
+            <p class="pkg-duration">⏱️ עד שעה באולפן</p>
+            <div class="price">₪1,650</div>
+            <div class="price-vat">+ מע"מ | ₪1,930 סה"כ</div>
+            <ul class="features">
+                <li><i class="fa-solid fa-check"></i> צילום 3 מצלמות 4K</li>
+                <li><i class="fa-solid fa-check"></i> עריכת ניתוב (Live Cut)</li>
+                <li><i class="fa-solid fa-check"></i> סאונד ותאורה קולנועית</li>
+                <li><i class="fa-solid fa-check"></i> קובץ מלא ליוטיוב + אודיו</li>
+                <li><i class="fa-solid fa-check"></i> חומרי גלם מהמצלמה (SD)</li>
+            </ul>
+        </div>
+        <button class="btn-pick">זה בשבילי</button>
+    </div>
+
+    <!-- VIP Launch -->
+    <div class="pkg-card vip" data-pkg-id="vip" data-pkg-price="4200" data-default-guests="2" onclick="selectPkg(this)">
+        <div class="pkg-badge" style="background:#000;color:var(--accent);border:1px solid var(--accent);">חבילת השקה</div>
+        <div class="pkg-header">
+            <h3>🚀 מיתוג והשקה</h3>
+            <p class="pkg-desc">כל מה שצריך כדי להתחיל</p>
+            <p class="pkg-duration">⏱️ עד שעה באולפן</p>
+            <div class="price">₪4,200</div>
+            <div class="price-vat">+ מע"מ | ₪4,914 סה"כ</div>
+            <ul class="features">
+                <li><i class="fa-solid fa-check"></i> הפקת פתיח (אינטרו) וידאו</li>
+                <li><i class="fa-solid fa-check"></i> עיצוב עטיפה (Thumbnail)</li>
+                <li><i class="fa-solid fa-check"></i> הקמת ערוצים (ספוטיפיי/אפל)</li>
+                <li><i class="fa-solid fa-check"></i> הקלטת פרק ראשון מלא (וידאו)</li>
+                <li><i class="fa-solid fa-check"></i> חומרי גלם מהמצלמה (SD)</li>
+            </ul>
+        </div>
+        <button class="btn-pick">בונים אימפריה</button>
+    </div>
+
+</div>
+<div class="scroll-hint" id="scroll-hint">← החליקו לראות עוד חבילות</div>
+
+<!-- ════ CONFIGURATOR ════ -->
+<div id="configurator">
+    <div class="step-title">שלב 2: שדרוגים ותוספות</div>
+
+    <!-- ── Content Upgrades ── -->
+    <div class="section-divider">📦 שדרוגי תוכן</div>
+    <div class="config-grid">
+
+        <!-- Social Reels -->
+        <div class="option-card" onclick="toggleOption(this,350,'חבילת סושיאל (3 Reels/TikTok)')">
+            <div class="opt-info">
+                <div class="opt-icon">📱</div>
+                <div class="opt-text">
+                    <h4>חבילת סושיאל</h4>
+                    <!-- ⑩ Reel length clarified -->
+                    <p>3 קטעים עד דקה — אתם בוחרים (או ביחד)</p>
+                </div>
+            </div>
+            <div class="opt-right">
+                <div class="opt-price">+₪350</div>
+                <div class="toggle-switch"></div>
+            </div>
+        </div>
+
+        <!-- Thumbnail -->
+        <div class="option-card" onclick="toggleOption(this,200,'עיצוב Thumbnail')">
+            <div class="opt-info">
+                <div class="opt-icon">🎨</div>
+                <div class="opt-text">
+                    <h4>עיצוב Thumbnail</h4>
+                    <p>תמונה מעוצבת ליוטיוב לפרק</p>
+                </div>
+            </div>
+            <div class="opt-right">
+                <div class="opt-price">+₪200</div>
+                <div class="toggle-switch"></div>
+            </div>
+        </div>
+
+        <!-- Upload & Distribute -->
+        <div class="option-card" onclick="toggleOption(this,150,'העלאה והפצה')">
+            <div class="opt-info">
+                <div class="opt-icon">☁️</div>
+                <div class="opt-text">
+                    <h4>העלאה והפצה</h4>
+                    <p>נעלה לספוטיפיי ואפל עבורך</p>
+                </div>
+            </div>
+            <div class="opt-right">
+                <div class="opt-price">+₪150</div>
+                <div class="toggle-switch"></div>
+            </div>
+        </div>
+
+        <!-- Intro Video — VIP included -->
+        <div class="option-card" id="opt-intro" onclick="toggleOption(this,650,'הפקת פתיח וידאו')">
+            <div class="opt-info">
+                <div class="opt-icon">🎵</div>
+                <div class="opt-text">
+                    <h4>הפקת פתיח וידאו</h4>
+                    <p>אינטרו מקצועי קבוע לכל הפרקים</p>
+                </div>
+            </div>
+            <div class="opt-right">
+                <div class="opt-price" id="intro-price">+₪650</div>
+                <div class="included-badge" id="intro-included"><i class="fa-solid fa-circle-check"></i> כלול בחבילה</div>
+                <div class="toggle-switch" id="intro-toggle"></div>
+            </div>
+        </div>
+
+        <!-- Remote Guest NEW -->
+        <!-- Moved to guests panel below as inline toggle -->
+
+    </div>
+
+    <!-- ── ⑥ Catering Upsell ── -->
+    <div class="section-divider">☕ כיבוד ואווירה</div>
+    <div class="catering-panel">
+        <div class="cp-header">
+            <span style="font-size:1.3rem;">🫖</span>
+            <h4>פינוק לפני הפרק</h4>
+        </div>
+        <p class="cp-sub">הכל מוכן ומחכה לכם עם הגעה. רוצים להוסיף כיבוד?</p>
+        <div class="catering-grid">
+            <div class="catering-item" data-catering="קפה ועוגיות" data-price="47" onclick="toggleCatering(this)">
+                <span class="ci-emoji">☕🍪</span>
+                <span class="ci-name">קפה ועוגיות</span>
+                <span class="ci-price">+₪47</span>
+            </div>
+            <div class="catering-item" data-catering="שתייה קרה ומיצים" data-price="37" onclick="toggleCatering(this)">
+                <span class="ci-emoji">🧃🥤</span>
+                <span class="ci-name">שתיה קרה</span>
+                <span class="ci-price">+₪37</span>
+            </div>
+            <div class="catering-item" data-catering="מגש פירות" data-price="63" onclick="toggleCatering(this)">
+                <span class="ci-emoji">🍓🍇</span>
+                <span class="ci-name">מגש פירות</span>
+                <span class="ci-price">+₪63</span>
+            </div>
+            <div class="catering-item" data-catering="חבילת VIP מלאה (הכל)" data-price="119" onclick="toggleCatering(this)">
+                <span class="ci-emoji">🎁✨</span>
+                <span class="ci-name">חבילת VIP</span>
+                <span class="ci-price">+₪119</span>
+            </div>
+        </div>
+        <div class="catering-custom">
+            <input type="text" placeholder="הזמנה מיוחדת / אביזרים ספציפיים? כתבו כאן..." id="catering-custom-input" oninput="onCateringCustom(this)">
+        </div>
+    </div>
+
+    <!-- ── File & Revisions ── -->
+    <div class="section-divider">📁 קבצים ועריכה</div>
+    <div class="config-grid">
+
+        <!-- ⑧ ISO files clarified — always included, option to take NOW via USB -->
+        <div class="option-card sd-option" id="opt-sd" onclick="toggleSD(this)">
+            <div class="sd-opt-info">
+                <div class="opt-icon">💾</div>
+                <div class="sd-opt-text">
+                    <h5>לקחת את החומרים עכשיו (USB)</h5>
+                    <p style="font-size:0.75rem;color:var(--text-muted);">רוצה לצאת מהאולפן עם הכל ישר? מסירת קבצי גלם (ISO) ידנית. אחרת — שולחים Google Drive.</p>
+                </div>
+            </div>
+            <div class="opt-right">
+                <div class="opt-price">+₪0</div>
+                <div class="toggle-switch"></div>
+            </div>
+        </div>
+
+        <!-- ⑬ Backup Archive — pay to keep -->
+        <div class="option-card" onclick="toggleOption(this,29,'שמירת חומרי גלם לצמיתות')">
+            <div class="opt-info">
+                <div class="opt-icon">🗄️</div>
+                <div class="opt-text">
+                    <h4>שמירת גיבוי לצמיתות</h4>
+                    <!-- ⑬ clarify default retention -->
+                    <p>ברירת מחדל: שמורים עד יום ההקלטה הבא. הוסף ₪29 לשמירה לצמיתות</p>
+                </div>
+            </div>
+            <div class="opt-right">
+                <div class="opt-price">+₪29</div>
+                <div class="toggle-switch"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ⑨ Revisions Picker -->
+    <div class="revisions-panel">
+        <div class="rp-header">
+            <h4>🔁 סבבי תיקונים</h4>
+        </div>
+        <p class="rp-sub">כמה סבבי תיקונים רוצים לכלול? (סבב 1 כלול בכל חבילה)</p>
+        <div class="revisions-btns">
+            <button class="rev-btn active" data-revisions="1" data-rev-price="0" onclick="selectRevisions(this)">1 סבב<br><span style="font-size:0.7rem;font-weight:400;">כלול</span></button>
+            <button class="rev-btn" data-revisions="2" data-rev-price="200" onclick="selectRevisions(this)">2 סבבים<br><span style="font-size:0.7rem;font-weight:400;">+₪200</span></button>
+            <button class="rev-btn" data-revisions="3" data-rev-price="350" onclick="selectRevisions(this)">3 סבבים<br><span style="font-size:0.7rem;font-weight:400;">+₪350</span></button>
+        </div>
+    </div>
+
+    <!-- ⑫ Media Format -->
+    <div class="media-panel">
+        <h4>📤 פורמט ואיך מקבלים</h4>
+        <p class="mp-sub">באיזה פורמט תרצו לקבל את הקובץ? (ניתן לשנות תמיד)</p>
+        <div class="media-options">
+            <button class="media-opt-btn active" data-fmt="MP4 (HD)" onclick="selectFormat(this)">MP4 (HD)</button>
+            <button class="media-opt-btn" data-fmt="MP4 (4K)" onclick="selectFormat(this)">MP4 (4K)</button>
+            <button class="media-opt-btn" data-fmt="WAV+MP4" onclick="selectFormat(this)">WAV + MP4</button>
+        </div>
+        <p style="font-size:0.75rem;color:var(--text-muted);margin-top:8px;">📬 מסירה דרך Google Drive (ברירת מחדל) או USB לפי בחירה למעלה</p>
+    </div>
+
+    <!-- ── Speakers ── -->
+    <div class="section-divider">👥 דוברים</div>
+    <div class="guests-panel">
+        <h4>כמה דוברים בפרק?</h4>
+        <div class="guests-info-label" id="guests-info-label">החבילה כוללת 2 מיקרופונים/מצלמות</div>
+        <div class="visual-singers" id="visual-singers">📹📹</div>
+        <div class="counter-controls">
+            <button class="btn-circle" id="btn-minus" onclick="updateGuests(-1)">−</button>
+            <div class="count-display" id="guest-count">2</div>
+            <!-- ⑪ Max 6 enforced -->
+            <button class="btn-circle" id="btn-plus" onclick="updateGuests(1)">+</button>
+        </div>
+        <div class="guests-max-notice">מקסימום 6 דוברים באולפן</div>
+        <div class="guest-warning" id="guest-warning">
+            ℹ️ דובר נוסף מעבר לכלול — תוספת ₪150 לסט-אפ ועריכה לכל דובר
+        </div>
+        <!-- NEW: Remote Guest Option -->
+        <div class="remote-option" id="opt-remote" onclick="toggleRemote(this)">
+            <div class="ro-text">
+                <h5>🌍 אורח מרחוק (Zoom / Riverside)</h5>
+                <p>חיבור אורח מחו"ל למסך באולפן — Setup טכני + שמע מסונכרן</p>
+            </div>
+            <div class="ro-right">
+                <span class="ro-price">+₪100</span>
+                <div class="toggle-switch-white"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Topic & Day ── -->
+    <div class="section-divider">📋 פרטי ההקלטה</div>
+
+    <!-- Topic Input -->
+    <div class="topic-section">
+        <div class="ts-header">
+            <h4>🎙️ מה נושא הפרק?</h4>
+            <!-- NEW: AI Helper Button -->
+            <button class="btn-ai-helper" onclick="openAIHelper()">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> עזרו לי לנסח
+            </button>
+        </div>
+        <p class="ts-sub">ההכנה שלנו תהיה הרבה יותר טובה כשנדע מה הנושא מראש</p>
+        <textarea class="topic-input" id="topic-input" placeholder='למשל: ראיון עם יזמת סטארטאפ על גיוס ראשון, ~45 דקות...' rows="2" maxlength="150" oninput="onTopicInput(this)"></textarea>
+        <div class="topic-row">
+            <div class="field-error" id="topic-error">נא למלא נושא פרק</div>
+            <div class="topic-char-count" id="topic-char">0 / 150</div>
+        </div>
+    </div>
+
+    <!-- Day Picker -->
+    <div class="day-section">
+        <h4>📅 מתי נוח להקליט?</h4>
+        <div class="days-grid">
+            <button class="day-btn" data-day="ראשון" onclick="selectDay(this)">ראשון<span class="day-sub">Sun</span></button>
+            <button class="day-btn" data-day="שני" onclick="selectDay(this)">שני<span class="day-sub">Mon</span></button>
+            <button class="day-btn" data-day="שלישי" onclick="selectDay(this)">שלישי<span class="day-sub">Tue</span></button>
+            <button class="day-btn" data-day="רביעי" onclick="selectDay(this)">רביעי<span class="day-sub">Wed</span></button>
+            <button class="day-btn" data-day="חמישי" onclick="selectDay(this)">חמישי<span class="day-sub">Thu</span></button>
+            <!-- FIX: "תיאום טלפוני" instead of "גמיש" -->
+            <button class="day-btn" data-day="תיאום טלפוני" onclick="selectDay(this)">גמיש 📞<span class="day-sub">Call me</span></button>
+        </div>
+        <div class="field-error" id="day-error" style="margin-top:8px;">נא לבחור יום מועדף</div>
+    </div>
+
+    <!-- ── Social Proof ── -->
+    <div class="section-divider">🎤 שמועות מהאולפן</div>
+    <div class="social-proof">
+        <h4>הפודקאסטים שהקליטו אצלנו</h4>
+        <div class="podcasts-grid">
+            <div class="podcast-item">
+                <div class="podcast-avatar" style="background:#1a3a5f;">ע</div>
+                <div class="podcast-text">
+                    <div class="pt-name">עידן בן אור</div>
+                    <div class="pt-show">איך הצלחת</div>
+                    <div class="stars-small">
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="podcast-item">
+                <div class="podcast-avatar" style="background:#7c3aed;">מ</div>
+                <div class="podcast-text">
+                    <div class="pt-name">מאור קמחי</div>
+                    <div class="pt-show">מקשקשים</div>
+                    <div class="stars-small">
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="podcast-item">
+                <div class="podcast-avatar" style="background:#0284c7;">ר</div>
+                <div class="podcast-text">
+                    <div class="pt-name">רון נשר</div>
+                    <div class="pt-show">פמלא</div>
+                    <div class="stars-small">
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="podcast-item">
+                <div class="podcast-avatar" style="background:#e53935;">ר</div>
+                <div class="podcast-text">
+                    <div class="pt-name">רויטל עמר</div>
+                    <div class="pt-show">אין לי עצבים | אמא של גאיה</div>
+                    <div class="stars-small">
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="podcast-item">
+                <div class="podcast-avatar" style="background:#c5a059;color:#000;">י</div>
+                <div class="podcast-text">
+                    <div class="pt-name">יקיר</div>
+                    <div class="pt-show">זמן להכיר</div>
+                    <div class="stars-small">
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="podcast-item">
+                <div class="podcast-avatar" style="background:#2e7d32;">ה</div>
+                <div class="podcast-text">
+                    <div class="pt-name">השם לא משנה</div>
+                    <div class="pt-show">פרק אורח</div>
+                    <div class="stars-small">
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="color:#FFD700;font-size:0.7rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Guarantee & Policies ── -->
+    <div class="section-divider">🛡️ ההתחייבות שלנו</div>
+    <div class="guarantee-banner">
+        <div class="gb-row">
+            <div class="gb-icon">🛡️</div>
+            <div class="gb-text">
+                <h5>גיבוי כפול לביטחון מלא</h5>
+                <p>ההקלטה נשמרת במקביל ב-2 מקורות נפרדים — SD + מחשב. הפחד מ"לא הוקלט" לא רלוונטי כאן.</p>
+            </div>
+        </div>
+        <div class="gb-row">
+            <div class="gb-icon">🎁</div>
+            <div class="gb-text">
+                <h5>תקלה טכנית? פרק מתנה עלינו</h5>
+                <p>אם הייתה תקלה מצדנו — מקליטים שוב בחינם, ללא שאלות וללא תוספת תשלום. מבטיחים ומקיימים.</p>
+            </div>
+        </div>
+        <div class="gb-row">
+            <div class="gb-icon">⚖️</div>
+            <div class="gb-text">
+                <h5>זכויות יוצרים שלכם לגמרי</h5>
+                <p>כל החומרים שייכים לכם במלואם. אנחנו שומרים זכות להשתמש בקטעים קצרים בלבד לתיק עבודות שלנו, אלא אם ביקשתם אחרת.</p>
+            </div>
+        </div>
+        <div class="gb-row">
+            <div class="gb-icon">🅿️</div>
+            <div class="gb-text">
+                <h5>גישה נגישה ונוחה</h5>
+                <p>גישה מלאה לנכים, חניה פרטית וחניות ציבוריות בשפע — מרחק 2 דקות הליכה מהכניסה.</p>
+            </div>
+        </div>
+        <div class="gb-row">
+            <div class="gb-icon">💳</div>
+            <div class="gb-text">
+                <!-- ② Payment & cancellation policy -->
+                <h5>תנאי תשלום וביטול</h5>
+                <p>שריון מחייב מקדמה של 50%. ביטול עד 48 שעות לפני — החזר מלא. ביטול מאוחר יותר — המקדמה אינה מוחזרת. גלישה בזמן: ₪150 לכל 15 דקות נוספות.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Referral ── -->
+    <div class="referral-section">
+        <div class="rs-header">
+            <span style="font-size:1.2rem;">🤝</span>
+            <h4>חבר מביא חבר — חסוך ₪50</h4>
+        </div>
+        <p>מגיעים דרך פודקאסטר שכבר הקליט אצלנו? כתבו את שמו וקבלו ₪50 הנחה ישירות.</p>
+        <div class="referral-toggle">
+            <input type="text" id="referral-input" placeholder="שם הפודקאסטר שהמליץ..." oninput="onReferralInput(this)">
+        </div>
+    </div>
+
+    <!-- ── Retainer Hint ── -->
+    <div class="retainer-hint" style="margin-top:15px;">
+        <div class="rh-badge">💡 חסוך 15%</div>
+        <h4>מנוי חודשי ל-4 פרקים?</h4>
+        <p>פודקאסטרים שחוזרים שבועי חוסכים בממוצע ₪1,200 בחודש עם חבילת המנוי שלנו.</p>
+        <a href="https://wa.me/972587555456?text=היי יקיר, אני מעוניינ/ת לשמוע על מנוי חודשי לפרקים 🎙️" target="_blank" rel="noopener noreferrer" class="btn-retainer">
+            <i class="fa-brands fa-whatsapp"></i> ספרו לי עוד
+        </a>
+    </div>
+
+    <!-- ⑭ Accessibility info -->
+    <div style="margin-top:15px;">
+        <div class="access-banner">
+            <div class="access-item"><i class="fa-solid fa-wheelchair"></i> גישה מלאה לנכים</div>
+            <div class="access-item"><i class="fa-solid fa-square-parking"></i> חניה פרטית + ציבורית</div>
+            <div class="access-item"><i class="fa-solid fa-wifi"></i> WiFi מהיר</div>
+            <div class="access-item"><i class="fa-solid fa-mug-hot"></i> פינת קפה</div>
+        </div>
+    </div>
+
+</div><!-- end configurator -->
+
+<!-- ════ STICKY FOOTER ════ -->
+<div class="sticky-footer" id="sticky-footer">
+    <div class="total-container" onclick="toggleDetails()">
+        <div class="total-label">סה"כ (לפני מע"מ) <i class="fa-solid fa-chevron-up" style="font-size:0.65em;"></i></div>
+        <div class="total-price" id="total-price">₪1,650</div>
+        <div class="total-vat-note">+ מע"מ: <span id="vat-amount">₪280</span></div>
+    </div>
+    <button class="btn-wa" onclick="openConfirm()">
+        <span>שריינו</span>
+        <i class="fa-brands fa-whatsapp" style="font-size:1.1rem;"></i>
+    </button>
+</div>
+
+<!-- Details Popup -->
+<div class="details-popup" id="details-popup">
+    <div id="details-content"></div>
+    <div class="details-close" onclick="toggleDetails()">✕ סגור</div>
+</div>
+
+<!-- ════ CONFIRM SHEET ════ -->
+<div class="confirm-overlay" id="confirm-overlay" onclick="closeConfirmOutside(event)">
+    <div class="confirm-sheet">
+        <div class="confirm-handle"></div>
+        <div class="confirm-title">הכל נראה טוב? 🎙️</div>
+        <div class="confirm-subtitle">בדקו את הסיכום לפני שפותחים וואטסאפ</div>
+        <!-- Validation warning -->
+        <div class="missing-chip" id="missing-chip">
+            <i class="fa-solid fa-triangle-exclamation"></i> <span id="missing-text"></span>
+        </div>
+        <div class="confirm-summary" id="confirm-summary"></div>
+        <div class="confirm-btns">
+            <button class="btn-confirm-back" onclick="closeConfirm()">← ערוך</button>
+            <button class="btn-confirm-go" id="btn-confirm-go">
+                <i class="fa-brands fa-whatsapp" style="font-size:1.1rem;"></i>
+                אישור — שלח בוואטסאפ
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ════ AI HELPER POPUP ════ -->
+<div class="ai-popup" id="ai-popup" onclick="closeAIOutside(event)">
+    <div class="ai-sheet">
+        <div class="ai-handle"></div>
+        <div class="ai-title">✨ עוזר ניסוח שאלות</div>
+        <div class="ai-sub">כתוב נושא ראיון ונציע לך רעיונות לשאלות מעניינות</div>
+        <div class="ai-input-row">
+            <input type="text" class="ai-topic-input" id="ai-topic-field" placeholder="למשל: ראיון עם מאמן כושר..." oninput="onAITopicChange()">
+            <button class="btn-generate" onclick="generateQuestions()">✨ הצג</button>
+        </div>
+        <div class="questions-list" id="questions-list"></div>
+        <div class="ai-close" onclick="closeAI()">✕ סגור</div>
+    </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════
+//  QUESTION BANK — per genre (static, curated)
+// ════════════════════════════════════════════════
+const QUESTION_BANK = {
+    "כושר": ["מה הייתה נקודת המפנה שהביאה אותך לאורח חיים בריא?","מה השגיאה הכי נפוצה שאתה רואה אצל מתחילים?","איך משלבים תזונה נכונה עם אורח חיים עמוס?"],
+    "עסקים": ["מה היה הרגע הקשה ביותר כיזם ואיך התמודדת?","מה הייתה ההחלטה האחת שהכי שינתה את המסלול שלך?","מה ייעוץ תיתן לעצמך בגיל 25?"],
+    "טכנולוגיה": ["מה הטכנולוגיה שהכי תשנה את החיים ב-5 שנים הקרובות?","מתי AI יהיה יותר חכם מאיתנו ומה זה אומר?","מה הבאבל הגדול ביותר בהייטק היום?"],
+    "הורות": ["מה המשפט שהכי שמעת שאלת ולא ידעת לענות?","איך שומרים על זהות אישית כשהופכים להורה?","מה הייתה ההפתעה הגדולה ביותר בהורות?"],
+    "ברירת מחדל": ["מה הרגע שהכי שינה את המסלול שלך?","מה היית עושה אחרת אם היית מתחיל מחדש?","מה שאף אחד לא מספר על תחום שלך?"]
+};
+
+function getQuestions(topic) {
+    const t = topic.toLowerCase();
+    for (const [key, qs] of Object.entries(QUESTION_BANK)) {
+        if (t.includes(key)) return qs;
+    }
+    return QUESTION_BANK["ברירת מחדל"];
+}
+
+// ════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════
+const MAX_GUESTS = 6;
+
+const state = {
+    pkg:           'vodcast',
+    pkgName:       '🎬 Vodcast Pro',
+    basePrice:     1650,
+    options:       [],        // [{ name, price }]
+    catering:      [],        // [{ name, price }]
+    cateringNote:  '',
+    guests:        2,
+    remoteGuest:   false,
+    revisionPrice: 0,
+    revisionLabel: '1 סבב',
+    sdLocal:       false,
+    fileFormat:    'MP4 (HD)',
+    topic:         '',
+    preferredDay:  '',
+    referral:      '',
+    currentTotal:  1650
+};
+
+let animFrame     = null;
+let guestDebounce = null;
+let confettiLast  = 0;
+
+// ════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+    selectPkg(document.querySelector('[data-pkg-id="vodcast"]'));
+    document.querySelector('.packages-wrapper').addEventListener('scroll', () => {
+        document.getElementById('scroll-hint').classList.add('hidden');
+    }, { once: true });
+});
+
+// ════════════════════════════════════════════════
+//  SELECT PACKAGE
+// ════════════════════════════════════════════════
+function selectPkg(el) {
+    const id            = el.dataset.pkgId;
+    const price         = parseInt(el.dataset.pkgPrice);
+    const defaultGuests = parseInt(el.dataset.defaultGuests) || 2;
+
+    state.pkg       = id;
+    state.basePrice = price;
+    state.pkgName   = el.querySelector('h3').innerText;
+
+    // Reset
+    state.options       = [];
+    state.catering      = [];
+    state.cateringNote  = '';
+    state.remoteGuest   = false;
+    state.revisionPrice = 0;
+    state.revisionLabel = '1 סבב';
+    state.sdLocal       = false;
+    state.guests        = defaultGuests;
+
+    document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.catering-item').forEach(c => c.classList.remove('selected'));
+    document.getElementById('catering-custom-input').value = '';
+    document.querySelectorAll('.rev-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.rev-btn[data-revisions="1"]').classList.add('active');
+    document.getElementById('opt-remote').classList.remove('selected');
+    document.getElementById('opt-sd').classList.remove('selected');
+
+    document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+
+    // Intro VIP included handling
+    const introCard   = document.getElementById('opt-intro');
+    const introBadge  = document.getElementById('intro-included');
+    const introToggle = document.getElementById('intro-toggle');
+    const introPrice  = document.getElementById('intro-price');
+    if (id === 'vip') {
+        introCard.classList.add('vip-included');
+        introBadge.style.display  = 'flex';
+        introToggle.style.display = 'none';
+        introPrice.style.display  = 'none';
+    } else {
+        introCard.classList.remove('vip-included');
+        introBadge.style.display  = 'none';
+        introToggle.style.display = 'block';
+        introPrice.style.display  = 'block';
+    }
+
+    // Info label & threshold per package
+    document.getElementById('guests-info-label').textContent =
+        id === 'audio' ? 'החבילה כוללת מיקרופון אחד (1 דובר)' : 'החבילה כוללת 2 מיקרופונים/מצלמות';
+
+    updateGuestVisuals();
+
+    document.getElementById('configurator').style.display = 'block';
+    document.getElementById('sticky-footer').classList.add('visible');
+    document.getElementById('pBar').style.width = '33%';
+    document.getElementById('scroll-hint').classList.add('hidden');
+
+    setTimeout(() => window.scrollTo({ top:200, behavior:'smooth' }), 100);
+    recalc();
+}
+
+// ════════════════════════════════════════════════
+//  TOGGLE OPTION
+// ════════════════════════════════════════════════
+function toggleOption(el, price, name) {
+    if (el.classList.contains('vip-included')) return;
+    el.classList.toggle('selected');
+    const on = el.classList.contains('selected');
+    if (on) {
+        state.options.push({ name, price });
+        const now = Date.now();
+        if (now - confettiLast > 500) {
+            confetti({ particleCount:25, spread:50, origin:{ y:0.8 }, colors:['#c5a059'] });
+            confettiLast = now;
+        }
+    } else {
+        state.options = state.options.filter(o => o.name !== name);
+    }
+    if (navigator.vibrate) navigator.vibrate(10);
+    document.getElementById('pBar').style.width = '66%';
+    recalc();
+}
+
+// ════════════════════════════════════════════════
+//  CATERING
+// ════════════════════════════════════════════════
+function toggleCatering(el) {
+    const name  = el.dataset.catering;
+    const price = parseInt(el.dataset.price);
+    el.classList.toggle('selected');
+    const on = el.classList.contains('selected');
+    if (on) {
+        // Deselect other catering (single select)
+        document.querySelectorAll('.catering-item').forEach(c => {
+            if (c !== el) c.classList.remove('selected');
+        });
+        state.catering = [{ name, price }];
+        if (navigator.vibrate) navigator.vibrate(8);
+    } else {
+        state.catering = [];
+    }
+    recalc();
+}
+
+function onCateringCustom(el) {
+    state.cateringNote = el.value.trim();
+}
+
+// ════════════════════════════════════════════════
+//  REVISIONS
+// ════════════════════════════════════════════════
+function selectRevisions(el) {
+    document.querySelectorAll('.rev-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    state.revisionPrice = parseInt(el.dataset.revPrice);
+    state.revisionLabel = el.dataset.revisions + ' סבבים';
+    if (navigator.vibrate) navigator.vibrate(8);
+    recalc();
+}
+
+// ════════════════════════════════════════════════
+//  MEDIA FORMAT
+// ════════════════════════════════════════════════
+function selectFormat(el) {
+    document.querySelectorAll('.media-opt-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    state.fileFormat = el.dataset.fmt;
+}
+
+// ════════════════════════════════════════════════
+//  SD CARD LOCAL PICKUP
+// ════════════════════════════════════════════════
+function toggleSD(el) {
+    el.classList.toggle('selected');
+    state.sdLocal = el.classList.contains('selected');
+    if (navigator.vibrate) navigator.vibrate(8);
+}
+
+// ════════════════════════════════════════════════
+//  REMOTE GUEST
+// ════════════════════════════════════════════════
+function toggleRemote(el) {
+    el.classList.toggle('selected');
+    state.remoteGuest = el.classList.contains('selected');
+    if (navigator.vibrate) navigator.vibrate(10);
+    recalc();
+}
+
+// ════════════════════════════════════════════════
+//  GUESTS — max 6
+// ════════════════════════════════════════════════
+function updateGuests(delta) {
+    const newVal = state.guests + delta;
+    if (newVal < 1 || newVal > MAX_GUESTS) return;
+    state.guests = newVal;
+    if (navigator.vibrate) navigator.vibrate(8);
+    updateGuestVisuals();
+    clearTimeout(guestDebounce);
+    guestDebounce = setTimeout(recalc, 150);
+}
+
+function updateGuestVisuals() {
+    document.getElementById('guest-count').innerText = state.guests;
+    // Update +/- button disabled state
+    document.getElementById('btn-minus').disabled = state.guests <= 1;
+    document.getElementById('btn-plus').disabled  = state.guests >= MAX_GUESTS;
+
+    const icon = state.pkg === 'audio' ? '🎙️' : '📹';
+    let visuals = '';
+    for (let i = 0; i < Math.min(state.guests, 5); i++) visuals += icon;
+    if (state.guests > 5) visuals += '➕';
+    document.getElementById('visual-singers').innerText = visuals;
+
+    const threshold = state.pkg === 'audio' ? 1 : 2;
+    document.getElementById('guest-warning').style.display = state.guests > threshold ? 'block' : 'none';
+}
+
+// ════════════════════════════════════════════════
+//  TOPIC INPUT
+// ════════════════════════════════════════════════
+function onTopicInput(el) {
+    state.topic = el.value.trim();
+    document.getElementById('topic-char').textContent = `${el.value.length} / 150`;
+    if (state.topic) {
+        el.classList.remove('input-error');
+        document.getElementById('topic-error').classList.remove('show');
+    }
+    if (state.topic.length > 0) document.getElementById('pBar').style.width = '80%';
+    recalc();
+}
+
+// ════════════════════════════════════════════════
+//  DAY PICKER
+// ════════════════════════════════════════════════
+function selectDay(el) {
+    document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    state.preferredDay = el.dataset.day;
+    document.getElementById('day-error').classList.remove('show');
+    if (navigator.vibrate) navigator.vibrate(8);
+    document.getElementById('pBar').style.width = '90%';
+    recalc();
+}
+
+// ════════════════════════════════════════════════
+//  REFERRAL
+// ════════════════════════════════════════════════
+function onReferralInput(el) {
+    state.referral = el.value.trim();
+    recalc();
+}
+
+// ════════════════════════════════════════════════
+//  RECALCULATE
+// ════════════════════════════════════════════════
+function recalc() {
+    let total = state.basePrice;
+    state.options.forEach(o => total += o.price);
+
+    const threshold = state.pkg === 'audio' ? 1 : 2;
+    let guestCost = 0;
+    if (state.guests > threshold) guestCost = (state.guests - threshold) * 150;
+    total += guestCost;
+
+    if (state.remoteGuest) total += 100;
+    if (state.revisionPrice) total += state.revisionPrice;
+    state.catering.forEach(c => total += c.price);
+    if (state.referral) total = Math.max(0, total - 50); // referral discount
+
+    const vat = Math.round(total * 0.18);
+
+    animateValue(document.getElementById('total-price'), state.currentTotal, total, 400);
+    document.getElementById('vat-amount').textContent = '₪' + vat.toLocaleString();
+    state.currentTotal = total;
+
+    // Details popup
+    let html = `<div class="details-row"><span>${state.pkgName}</span><span>₪${state.basePrice.toLocaleString()}</span></div>`;
+    state.options.forEach(o => { html += `<div class="details-row"><span>${o.name}</span><span>+₪${o.price.toLocaleString()}</span></div>`; });
+    if (state.remoteGuest) html += `<div class="details-row"><span>אורח מרחוק</span><span>+₪100</span></div>`;
+    if (guestCost) html += `<div class="details-row"><span>תוספת דוברים</span><span>+₪${guestCost.toLocaleString()}</span></div>`;
+    if (state.revisionPrice) html += `<div class="details-row"><span>סבבי תיקונים</span><span>+₪${state.revisionPrice.toLocaleString()}</span></div>`;
+    state.catering.forEach(c => { html += `<div class="details-row"><span>${c.name}</span><span>+₪${c.price.toLocaleString()}</span></div>`; });
+    if (state.referral) html += `<div class="details-row" style="color:green;"><span>🤝 הנחת חבר</span><span>−₪50</span></div>`;
+    html += `<div class="details-row final"><span>לפני מע"מ</span><span>₪${total.toLocaleString()}</span></div>`;
+    html += `<div class="details-row" style="font-size:0.8rem;color:#888;"><span>+ מע"מ 18%</span><span>₪${vat.toLocaleString()}</span></div>`;
+    document.getElementById('details-content').innerHTML = html;
+}
+
+// ════════════════════════════════════════════════
+//  BUILD WA LINK
+// ════════════════════════════════════════════════
+function buildWALink() {
+    const total     = state.currentTotal;
+    const threshold = state.pkg === 'audio' ? 1 : 2;
+    const guestCost = state.guests > threshold ? (state.guests - threshold) * 150 : 0;
+    const vat       = Math.round(total * 0.18);
+
+    const optList      = state.options.map(o => o.name).join(', ') || 'ללא';
+    const cateringLine = state.catering.length ? `%0A☕ *כיבוד:* ${state.catering[0].name}${state.cateringNote ? ' + ' + state.cateringNote : ''}` : (state.cateringNote ? `%0A☕ *כיבוד מיוחד:* ${state.cateringNote}` : '');
+    const remoteLine   = state.remoteGuest ? '%0A🌍 *אורח מרחוק:* כן (+₪100)' : '';
+    const revLine      = state.revisionPrice ? `%0A🔁 *תיקונים:* ${state.revisionLabel}` : '';
+    const topicLine    = state.topic ? `%0A🎯 *נושא הפרק:* ${encodeURIComponent(state.topic)}` : '';
+    const dayLine      = state.preferredDay ? `%0A📅 *יום מועדף:* ${state.preferredDay}` : '';
+    const fmtLine      = `%0A📁 *פורמט:* ${state.fileFormat}${state.sdLocal ? ' (איסוף USB)' : ' (Google Drive)'}`;
+    const refLine      = state.referral ? `%0A🤝 *המלצה מ:* ${state.referral} (הנחת ₪50)` : '';
+
+    const txt = `היי יקיר! אני רוצה לשריין הקלטת פודקאסט:%0A%0A🎙️ *חבילה:* ${state.pkgName}%0A➕ *תוספות:* ${optList}%0A👥 *דוברים:* ${state.guests}${remoteLine}${revLine}${cateringLine}${topicLine}${dayLine}${fmtLine}${refLine}%0A%0A💰 *לפני מע"מ:* ₪${total.toLocaleString()}%0A📊 *כולל מע"מ (18%):* ₪${(total + vat).toLocaleString()}`;
+    return `https://wa.me/972587555456?text=${txt}`;
+}
+
+// ════════════════════════════════════════════════
+//  CONFIRM SHEET — with validation
+// ════════════════════════════════════════════════
+function openConfirm() {
+    // Validation
+    const missing = [];
+    if (!state.topic) missing.push('נושא הפרק');
+    if (!state.preferredDay) missing.push('יום מועדף');
+
+    const chip = document.getElementById('missing-chip');
+    const txt  = document.getElementById('missing-text');
+    if (missing.length > 0) {
+        txt.textContent  = `לא מילאת: ${missing.join(' ו-')} — המידע יעזור לנו להתכונן טוב יותר (לא חובה)`;
+        chip.classList.add('show');
+    } else {
+        chip.classList.remove('show');
+    }
+
+    const total     = state.currentTotal;
+    const vat       = Math.round(total * 0.18);
+    const threshold = state.pkg === 'audio' ? 1 : 2;
+    const guestCost = state.guests > threshold ? (state.guests - threshold) * 150 : 0;
+
+    let html = `<div class="cs-row"><span>חבילה</span><span>${state.pkgName}</span></div>`;
+    if (state.options.length) html += `<div class="cs-row"><span>תוספות</span><span style="font-size:0.78rem;text-align:left;max-width:160px;">${state.options.map(o=>o.name).join(', ')}</span></div>`;
+    if (guestCost)            html += `<div class="cs-row"><span>תוספת דוברים</span><span>+₪${guestCost.toLocaleString()}</span></div>`;
+    if (state.remoteGuest)    html += `<div class="cs-row"><span>אורח מרחוק</span><span>+₪100</span></div>`;
+    if (state.revisionPrice)  html += `<div class="cs-row"><span>תיקונים</span><span>+₪${state.revisionPrice.toLocaleString()}</span></div>`;
+    state.catering.forEach(c => { html += `<div class="cs-row"><span>${c.name}</span><span>+₪${c.price}</span></div>`; });
+    if (state.referral)       html += `<div class="cs-row" style="color:green;"><span>הנחת חבר</span><span>−₪50</span></div>`;
+    if (state.topic)          html += `<div class="cs-row"><span>נושא</span><span style="font-size:0.78rem;text-align:left;max-width:160px;">${state.topic}</span></div>`;
+    if (state.preferredDay)   html += `<div class="cs-row"><span>יום מועדף</span><span>${state.preferredDay}</span></div>`;
+    html += `<div class="cs-row total"><span>לפני מע"מ</span><span>₪${total.toLocaleString()}</span></div>`;
+    html += `<div class="cs-row" style="font-size:0.82rem;color:#888;"><span>+ מע"מ</span><span>₪${vat.toLocaleString()}</span></div>`;
+    html += `<div class="cs-row" style="font-weight:900;color:#000;font-size:1rem;"><span>סה"כ לתשלום</span><span>₪${(total+vat).toLocaleString()}</span></div>`;
+    document.getElementById('confirm-summary').innerHTML = html;
+
+    document.getElementById('btn-confirm-go').onclick = () => {
+        window.open(buildWALink(), '_blank', 'noopener,noreferrer');
+        closeConfirm();
+    };
+    document.getElementById('confirm-overlay').classList.add('show');
+    if (navigator.vibrate) navigator.vibrate([10,50,10]);
+}
+
+function closeConfirm() { document.getElementById('confirm-overlay').classList.remove('show'); }
+function closeConfirmOutside(e) { if (e.target === document.getElementById('confirm-overlay')) closeConfirm(); }
+
+// ════════════════════════════════════════════════
+//  AI HELPER
+// ════════════════════════════════════════════════
+function openAIHelper() {
+    document.getElementById('ai-popup').classList.add('show');
+    document.getElementById('ai-topic-field').value = state.topic || '';
+    onAITopicChange();
+}
+function closeAI() { document.getElementById('ai-popup').classList.remove('show'); }
+function closeAIOutside(e) { if (e.target === document.getElementById('ai-popup')) closeAI(); }
+
+function onAITopicChange() {
+    const val = document.getElementById('ai-topic-field').value.trim();
+    if (val.length > 2) generateQuestions();
+}
+
+function generateQuestions() {
+    const topic = document.getElementById('ai-topic-field').value.trim();
+    if (!topic) return;
+    const qs   = getQuestions(topic);
+    const list = document.getElementById('questions-list');
+    list.innerHTML = qs.map(q => `
+        <div class="q-item" onclick="useQuestion('${q.replace(/'/g,"\\'")}')">
+            <i class="fa-solid fa-lightbulb"></i>
+            <span>${q}</span>
+        </div>
+    `).join('');
+    list.classList.add('show');
+}
+
+function useQuestion(q) {
+    const ta = document.getElementById('topic-input');
+    ta.value = q;
+    onTopicInput(ta);
+    closeAI();
+}
+
+// ════════════════════════════════════════════════
+//  DETAILS POPUP
+// ════════════════════════════════════════════════
+function toggleDetails() { document.getElementById('details-popup').classList.toggle('show'); }
+document.addEventListener('click', e => {
+    const popup = document.getElementById('details-popup');
+    const total = document.querySelector('.total-container');
+    if (!popup.contains(e.target) && !total.contains(e.target)) popup.classList.remove('show');
+});
+
+// ════════════════════════════════════════════════
+//  ANIMATE PRICE
+// ════════════════════════════════════════════════
+function animateValue(el, start, end, duration) {
+    if (animFrame) cancelAnimationFrame(animFrame);
+    if (start === end) { el.innerHTML = '₪' + end.toLocaleString(); return; }
+    let ts = null;
+    const step = t => {
+        if (!ts) ts = t;
+        const p = Math.min((t - ts) / duration, 1);
+        const e = 1 - Math.pow(1 - p, 3);
+        el.innerHTML = '₪' + Math.floor(e * (end - start) + start).toLocaleString();
+        if (p < 1) { animFrame = requestAnimationFrame(step); }
+        else { el.innerHTML = '₪' + end.toLocaleString(); animFrame = null; }
+    };
+    animFrame = requestAnimationFrame(step);
+}
+</script>
+</body>
+</html>
