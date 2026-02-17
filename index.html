@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>יקיר כהן הפקות - מחירון 2026</title>
+<meta property="og:title" content="יקיר כהן הפקות - מחירון 2026">
+<meta property="og:description" content="20 שנה. 1,500+ אירועים. הסטנדרט של התעשייה.">
+<meta property="og:image" content="https://img.youtube.com/vi/VbwWkcc6His/maxresdefault.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0c;--bg2:#111114;--card:#161619;--card2:#1e1e22;--card3:#252529;--txt:#f0f0f0;--txt2:#a0a0a8;--txt3:#6a6a72;--gld:#c9a227;--gld-lt:#f0d96b;--gld-bg:rgba(201,162,39,.06);--gld-gl:rgba(201,162,39,.18);--grn:#25d366;--grn-h:#1daf54;--grn-gl:rgba(37,211,102,.22);--red:#e53935;--org:#e65100;--brd:rgba(255,255,255,.06);--brd2:rgba(255,255,255,.1);--rl:18px;--rm:12px;--rs:8px;--rf:50px;--tr:all .28s cubic-bezier(.25,.46,.45,.94)}
+/* Light mode */
+body.light{--bg:#f5f5f3;--bg2:#eaeae8;--card:#ffffff;--card2:#f0f0ee;--card3:#e5e5e3;--txt:#111;--txt2:#555;--txt3:#999;--brd:rgba(0,0,0,.06);--brd2:rgba(0,0,0,.1)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:-300% center}100%{background-position:300% center}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes waGlow{0%,100%{box-shadow:0 4px 14px var(--grn-gl)}50%{box-shadow:0 6px 24px rgba(37,211,102,.35)}}
+@keyframes scrollRTL{0%{transform:translateX(0)}100%{transform:translateX(50%)}}
+@keyframes fadeCycle{0%,20%{opacity:1}25%,95%{opacity:0}100%{opacity:0}}
+.an{opacity:0;animation:rise .5s ease forwards}.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}.d4{animation-delay:.32s}
+
+/* ═══ LANDING SCREEN ═══ */
+.landing{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s,transform .6s}
+.landing.hidden{opacity:0;transform:scale(1.05);pointer-events:none}
+
+.landing-bg{position:absolute;inset:0;background:#000 url(https://img.youtube.com/vi/VbwWkcc6His/maxresdefault.jpg) center/cover;overflow:hidden}.landing-bg iframe{position:absolute;top:50%;left:50%;width:178vh;height:100vh;min-width:100%;min-height:56.25vw;transform:translate(-50%,-50%);pointer-events:none}
+.landing-ov{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(2px)}
+.landing-content{position:relative;z-index:2;text-align:center;max-width:700px;padding:0 20px;width:100%}
+.landing-logo{height:50px;margin-bottom:16px;filter:brightness(10)}
+body.light .landing-logo{filter:none}
+.landing h1{font-size:clamp(24px,5vw,42px);font-weight:900;letter-spacing:-1.5px;margin-bottom:6px;color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.6),0 0 40px rgba(0,0,0,.4)}
+.landing h1 .gld{background:linear-gradient(135deg,var(--gld),var(--gld-lt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.landing-sub{font-size:13px;color:rgba(255,255,255,.6);font-weight:300;margin-bottom:8px}
+.landing-date{font-size:10px;color:rgba(255,255,255,.35);margin-bottom:24px}
+
+/* Hub Grid */
+.hub{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:600px;margin:0 auto 20px}
+.hub-card{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.08);border-radius:var(--rl);padding:16px 12px;text-align:center;cursor:pointer;transition:var(--tr);position:relative;overflow:hidden;backdrop-filter:blur(8px)}
+.hub-card:hover{border-color:var(--gld);background:rgba(201,162,39,.08);transform:translateY(-3px)}
+.hub-card-thumb{width:100%;aspect-ratio:16/9;border-radius:var(--rs);overflow:hidden;margin-bottom:8px;background:#000;position:relative}
+.hub-card-thumb img{width:100%;height:100%;object-fit:cover;transition:var(--tr);opacity:.7}
+.hub-card:hover .hub-card-thumb img{opacity:1;transform:scale(1.05)}
+.hub-card-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;opacity:0;transition:var(--tr)}
+.hub-card:hover .hub-card-play{opacity:1}.hub-card:hover .hc-enter{opacity:1}
+.hub-card-tag{position:absolute;top:6px;left:6px;padding:2px 8px;border-radius:var(--rf);font-size:8px;font-weight:700;background:var(--red);color:#fff;z-index:2}
+.hub-card-nm{font-size:13px;font-weight:700;color:#fff;margin-bottom:2px}
+.hub-card-rng{font-size:10px;color:var(--gld);font-weight:600}
+
+/* Rotating review */
+.landing-review{max-width:500px;margin:0 auto;height:40px;position:relative;overflow:hidden}
+.landing-rev{position:absolute;width:100%;text-align:center;opacity:0;transition:opacity .6s}
+.landing-rev.active{opacity:1}
+.landing-rev-txt{font-size:12px;color:rgba(255,255,255,.5);font-style:italic}
+.landing-rev-author{font-size:10px;color:var(--gld);font-weight:600}
+
+/* Trust scroll */
+.landing-trust{margin-top:20px;overflow:hidden;mask-image:linear-gradient(to right,transparent,#000 15%,#000 85%,transparent)}
+.landing-trust-track{display:flex;gap:32px;animation:scrollRTL 35s linear infinite;width:max-content}
+.landing-trust-item{font-size:11px;color:rgba(255,255,255,.4);font-weight:600;white-space:nowrap}
+
+/* Landing controls */
+.landing-ctrls{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:5}
+.landing-ctrl{padding:5px 14px;border-radius:var(--rf);border:1px solid rgba(255,255,255,.15);background:transparent;font-family:'Heebo',sans-serif;font-size:9px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;transition:var(--tr)}
+.landing-ctrl:hover{border-color:var(--gld);color:var(--gld)}
+
+/* ═══ NAV ═══ */
+nav{position:sticky;top:0;z-index:50;background:rgba(10,10,12,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--brd);padding:0;display:none}
+body.light nav{background:rgba(245,245,243,.92)}
+nav.show{display:block}
+.nav-row{display:flex;align-items:center;max-width:860px;margin:0 auto;padding:5px 16px;gap:6px}
+.nav-scroll{display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1}.nav-scroll::-webkit-scrollbar{display:none}
+.nav-a{white-space:nowrap;padding:4px 10px;border-radius:var(--rf);font-size:10px;font-weight:600;color:var(--txt3);text-decoration:none;transition:var(--tr);border:1px solid transparent;flex-shrink:0}
+.nav-a:hover,.nav-a.active{color:var(--gld);border-color:var(--gld-gl);background:var(--gld-bg)}
+.nav-home{padding:4px 10px;border-radius:var(--rf);border:1px solid var(--brd2);background:transparent;font-family:'Heebo',sans-serif;font-size:9px;font-weight:700;color:var(--txt3);cursor:pointer;transition:var(--tr);flex-shrink:0}
+.nav-home:hover{border-color:var(--gld);color:var(--gld)}
+.nav-logo-sm{height:20px;filter:brightness(10);flex-shrink:0}
+body.light .nav-logo-sm{filter:none}
+.nav-date{font-size:8px;color:var(--txt3);flex-shrink:0;white-space:nowrap}
+/* Theme + B2B toggles */
+.nav-toggles{display:flex;gap:6px;flex-shrink:0;margin-right:6px}
+.ntgl{display:flex;align-items:center;gap:3px;cursor:pointer}
+.ntgl-sw{width:28px;height:14px;background:var(--card3);border-radius:7px;position:relative;transition:var(--tr)}
+.ntgl-sw::after{content:'';width:10px;height:10px;background:var(--txt3);border-radius:50%;position:absolute;top:2px;right:2px;transition:var(--tr)}
+.ntgl.on .ntgl-sw{background:var(--gld)}
+.ntgl.on .ntgl-sw::after{right:auto;left:2px;background:#111}
+.ntgl-lbl{font-size:8px;color:var(--txt3);font-weight:600}
+/* ═══ MAIN CONTENT ═══ */
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+/* Rooms - each category is a "room" that shows/hides */
+.room{display:none;animation:rise .35s ease forwards;padding-bottom:80px}
+.room.on{display:block}
+
+/* ═══ REUSED FROM V4 ═══ */
+.sec{padding:36px 0 6px}.sec-hdr{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding-bottom:6px;border-bottom:1.5px solid var(--brd2)}
+.sec-ico{font-size:20px}.sec-t{font-size:18px;font-weight:800}.sec-sub{font-size:10px;color:var(--txt3);font-weight:300;margin-right:auto}
+.prose{font-size:13px;color:var(--txt2);font-weight:300;line-height:1.85;margin-bottom:16px}.prose strong{color:var(--txt);font-weight:600}.prose .gld{color:var(--gld);font-weight:600}
+.timeline{position:relative;padding-right:22px;margin-bottom:20px}.timeline::before{content:'';position:absolute;right:5px;top:6px;bottom:6px;width:2px;background:var(--gld-gl)}
+.tl-item{position:relative;margin-bottom:14px;padding-right:18px}.tl-item::before{content:'';position:absolute;right:-18px;top:7px;width:8px;height:8px;border-radius:50%;background:var(--gld);border:2px solid var(--bg)}
+.tl-title{font-size:12px;font-weight:700;color:var(--gld);margin-bottom:1px}.tl-desc{font-size:11px;color:var(--txt2);font-weight:300;line-height:1.6}
+.reviews{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.rev{background:var(--card);border:1px solid var(--brd2);border-radius:var(--rm);padding:14px 12px}
+.rev-stars{color:var(--gld);font-size:11px;margin-bottom:4px;letter-spacing:2px}
+.rev-txt{font-size:11.5px;color:var(--txt2);font-weight:300;font-style:italic;line-height:1.6;margin-bottom:6px}
+.rev-author{font-size:10px;font-weight:600;color:var(--gld)}.rev-src{font-size:8.5px;color:var(--txt3)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.card{background:var(--card);border:1.5px solid var(--brd);border-radius:var(--rl);padding:20px 16px;position:relative;transition:var(--tr)}
+.card:hover{border-color:var(--brd2);transform:translateY(-2px)}
+.card--pop{border-color:var(--org);box-shadow:0 3px 16px rgba(230,81,0,.08)}
+.card--vip{background:linear-gradient(145deg,#131316,#1a1a10);border-color:rgba(201,162,39,.2)}
+body.light .card--vip{background:linear-gradient(145deg,#f8f6f0,#f0ede0)}
+.card-badge{position:absolute;top:-8px;right:12px;padding:2px 10px;border-radius:var(--rf);font-size:8.5px;font-weight:800;background:var(--gld);color:#111}
+.card-nm{font-size:15px;font-weight:800;margin-bottom:2px}.card--vip .card-nm{color:var(--gld-lt)}
+.card-sub{font-size:10px;color:var(--txt3);font-weight:300;margin-bottom:8px}
+.card-from{font-size:8.5px;color:var(--txt3);font-weight:500;margin-bottom:1px}
+.card-price{font-size:24px;font-weight:900;letter-spacing:-1px;margin-bottom:1px}
+.card--pop .card-price{color:var(--org)}.card--vip .card-price{color:var(--gld)}
+.card-vat{font-size:9px;color:var(--txt3);margin-bottom:4px}
+.card-value{font-size:9px;color:var(--txt2);font-weight:300;margin-bottom:6px}
+.card-icons{display:flex;gap:4px;margin-bottom:6px;flex-wrap:wrap}
+.card-icn{width:24px;height:24px;background:var(--card2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;position:relative}
+.card-icn[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 3px);right:50%;transform:translateX(50%);background:var(--card3);color:var(--txt);font-size:7.5px;padding:2px 6px;border-radius:3px;white-space:nowrap;z-index:5}
+.peace{display:flex;align-items:center;gap:5px;margin-bottom:8px}
+.peace-lbl{font-size:8.5px;color:var(--txt3);white-space:nowrap}
+.peace-bar{flex:1;height:3px;background:var(--card3);border-radius:2px;overflow:hidden}
+.peace-fill{height:100%;background:linear-gradient(90deg,var(--gld),var(--gld-lt));border-radius:2px}
+.peace-pct{font-size:8.5px;color:var(--gld);font-weight:700;width:22px;text-align:left}
+.card-ft{list-style:none;margin-bottom:10px}
+.card-ft li{font-size:10.5px;color:var(--txt2);padding:2px 0;display:flex;align-items:flex-start;gap:4px;font-weight:300}
+.card-ft .ck{color:var(--gld);font-size:8px;margin-top:3px;flex-shrink:0}
+.int-btn{width:100%;padding:9px;border-radius:var(--rs);border:1.5px solid var(--brd2);background:transparent;font-family:'Heebo',sans-serif;font-size:11.5px;font-weight:700;cursor:pointer;transition:var(--tr);color:var(--txt);text-decoration:none;display:block;text-align:center}
+.int-btn:hover{border-color:var(--gld);color:var(--gld);background:var(--gld-bg)}
+.int-btn--grn{background:var(--grn);color:#fff;border-color:var(--grn)}.int-btn--grn:hover{background:var(--grn-h);color:#fff}
+.int-btn--gld{background:linear-gradient(135deg,var(--gld),var(--gld-lt));color:#111;border-color:var(--gld)}
+.srv{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--card);border:1px solid var(--brd);border-radius:var(--rs);margin-bottom:6px;transition:var(--tr)}
+.srv:hover{border-color:var(--brd2)}
+.srv-ico{font-size:15px;flex-shrink:0}.srv-info{flex:1;min-width:0}.srv-nm{font-size:12px;font-weight:600}.srv-desc{font-size:9.5px;color:var(--txt3);font-weight:300}
+.srv-price{font-size:13px;font-weight:800;color:var(--gld);white-space:nowrap}
+.srv-int{padding:4px 10px;border-radius:var(--rf);border:1px solid var(--brd2);background:transparent;font-family:'Heebo',sans-serif;font-size:9px;font-weight:600;color:var(--txt3);cursor:pointer;transition:var(--tr);white-space:nowrap;flex-shrink:0}
+.srv-int:hover{border-color:var(--gld);color:var(--gld);background:var(--gld-bg)}
+.ptable{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:11px}
+.ptable th{text-align:right;padding:6px 10px;background:var(--card2);color:var(--gld);font-weight:700;font-size:9.5px;border-bottom:1px solid var(--brd2)}
+.ptable td{padding:6px 10px;border-bottom:1px solid var(--brd);color:var(--txt2);font-weight:300}
+.ptable td:last-child{text-align:left;font-weight:600;color:var(--txt);white-space:nowrap}
+.ptable td .explain{display:block;font-size:9px;color:var(--txt3);margin-top:1px}
+.ptable-total td{background:var(--gld-bg);font-weight:700!important;color:var(--gld)!important;font-size:12px}
+/* Video embed */
+.vid-embed{width:100%;aspect-ratio:16/9;border-radius:var(--rm);overflow:hidden;margin-bottom:12px;background:#000;position:relative;cursor:pointer}
+.vid-embed img{width:100%;height:100%;object-fit:cover;transition:var(--tr)}
+.vid-embed:hover img{opacity:.7}
+.vid-embed-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:32px;color:#fff;opacity:.8}
+.vid-embed-label{position:absolute;bottom:6px;right:8px;padding:2px 8px;border-radius:var(--rf);background:rgba(0,0,0,.7);font-size:9px;color:#fff;font-weight:600}
+.vid-embed.playing img,.vid-embed.playing .vid-embed-play,.vid-embed.playing .vid-embed-label{display:none}
+.vid-embed iframe{width:100%;height:100%;border:none}
+/* FX */
+.fx-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.fx{background:var(--card);border:1.5px solid var(--brd);border-radius:var(--rm);padding:12px;text-align:center;cursor:pointer;transition:var(--tr);user-select:none;position:relative}
+.fx:hover{border-color:var(--brd2)}.fx.on{border-color:var(--gld);background:var(--gld-bg)}
+.fx-ico{font-size:24px;display:block;margin-bottom:3px}.fx-nm{font-size:11px;font-weight:700;margin-bottom:2px}.fx-price{font-size:10px;color:var(--gld);font-weight:600}
+.fx-check{width:14px;height:14px;border-radius:50%;border:2px solid var(--brd2);margin:4px auto 0;font-size:8px;display:flex;align-items:center;justify-content:center;color:transparent;transition:var(--tr)}
+.fx.on .fx-check{background:var(--gld);border-color:var(--gld);color:#111}
+.fx-vid{position:absolute;top:5px;left:5px;width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:7px;cursor:pointer;transition:var(--tr)}
+.fx-vid:hover{background:var(--gld);color:#111}
+.fx-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--card);border:1.5px solid var(--brd2);border-radius:var(--rm);margin-bottom:12px;display:none}
+.fx-bar.show{display:flex}
+.fx-count{font-size:13px;font-weight:700}.fx-count .num{color:var(--gld);font-size:16px}.fx-total{font-size:15px;font-weight:800;color:var(--gld)}.fx-save{font-size:10px;color:var(--grn);font-weight:600}
+.evt{background:var(--card);border:1px solid var(--brd2);border-radius:var(--rm);padding:14px 12px;margin-bottom:8px}
+.evt-top{display:flex;align-items:center;gap:6px;margin-bottom:6px}.evt-ico{font-size:18px}.evt-nm{font-size:14px;font-weight:700}
+.evt-rng{font-size:10px;color:var(--gld);font-weight:600;margin-right:auto}
+.evt-desc{font-size:12px;color:var(--txt2);font-weight:300;line-height:1.65;margin-bottom:6px}
+.wed-bk{width:100%;border-collapse:collapse;font-size:10.5px;margin:8px 0}
+.wed-bk td{padding:4px 6px;border-bottom:1px solid var(--brd);color:var(--txt2)}.wed-bk td:first-child{font-weight:600;color:var(--txt)}.wed-bk td:last-child{text-align:left;color:var(--gld);font-weight:700}
+.vs{display:inline-block;background:var(--gld-bg);border:1px solid rgba(201,162,39,.2);border-radius:var(--rf);padding:2px 10px;font-size:9.5px;color:var(--gld);font-weight:600;margin-bottom:6px}
+.pcalc{background:var(--card);border:1.5px solid var(--brd2);border-radius:var(--rl);padding:18px 14px;margin-bottom:14px}
+.pcalc h3{font-size:14px;font-weight:800;margin-bottom:3px}.pcalc-sub{font-size:9.5px;color:var(--txt3);margin-bottom:10px}
+.pcalc-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--brd)}
+.pcalc-lbl{font-size:11px;font-weight:600;flex:1}.pcalc-desc{font-size:8.5px;color:var(--txt3)}
+.pcalc-ctrl{display:flex;align-items:center;gap:5px}.pcalc-ctrl button{width:24px;height:24px;border-radius:5px;border:1.5px solid var(--brd2);background:transparent;color:var(--txt);font-size:12px;cursor:pointer;font-family:'Heebo',sans-serif}
+.pcalc-v{font-size:13px;font-weight:800;width:20px;text-align:center}
+.pcalc-pr{font-size:11px;font-weight:700;color:var(--gld);width:50px;text-align:left}
+.pcalc-total{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--gld-bg);border-radius:var(--rs);margin-top:8px}
+.pcalc-total-lbl{font-size:11px;font-weight:600}.pcalc-total-pr{font-size:18px;font-weight:900;color:var(--gld)}
+.guarantee{background:linear-gradient(135deg,#0e140e,#121612);border:1.5px solid rgba(37,211,102,.15);border-radius:var(--rm);padding:12px 14px;margin:14px 0;display:flex;align-items:flex-start;gap:8px}
+body.light .guarantee{background:linear-gradient(135deg,#f0fff0,#e8f8e8)}
+.guarantee-ico{font-size:20px;flex-shrink:0}.guarantee-txt{font-size:11px;color:var(--txt2);font-weight:300;line-height:1.5}.guarantee-txt strong{color:var(--grn);font-weight:700}
+.cta{background:var(--card);border:1.5px solid var(--gld);border-radius:var(--rl);padding:18px 16px;text-align:center;margin:20px 0}
+.cta h3{font-size:16px;font-weight:800;margin-bottom:4px}.cta p{font-size:11px;color:var(--txt2);font-weight:300;margin-bottom:10px}
+.cta-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 24px;border-radius:var(--rs);font-size:13px;font-weight:700;text-decoration:none;color:#fff;background:var(--grn);transition:var(--tr);animation:waGlow 3s ease infinite}
+.cta-btn:hover{background:var(--grn-h);transform:translateY(-2px)}
+.cta-btn--gld{background:linear-gradient(135deg,var(--gld),var(--gld-lt));color:#111;animation:none}
+.quiz{background:var(--card);border:1.5px solid var(--brd2);border-radius:var(--rl);padding:20px 16px;margin:24px 0}
+.quiz h3{font-size:16px;font-weight:800;margin-bottom:3px}.quiz-sub{font-size:11px;color:var(--txt3);margin-bottom:14px}
+.quiz-q{margin-bottom:12px}.quiz-label{font-size:11px;font-weight:600;margin-bottom:5px}
+.quiz-opts{display:flex;flex-wrap:wrap;gap:6px}
+.quiz-opt{padding:6px 12px;border-radius:var(--rf);border:1.5px solid var(--brd2);background:transparent;font-family:'Heebo',sans-serif;font-size:10.5px;font-weight:600;color:var(--txt2);cursor:pointer;transition:var(--tr)}
+.quiz-opt:hover{border-color:var(--gld);color:var(--gld)}.quiz-opt.on{background:var(--gld);color:#111;border-color:var(--gld)}
+.quiz-result{background:var(--gld-bg);border:1.5px solid var(--gld-gl);border-radius:var(--rm);padding:14px;margin-top:12px;display:none}
+.quiz-result.show{display:block}.quiz-result h4{font-size:14px;font-weight:800;color:var(--gld);margin-bottom:6px}
+.quiz-rec{font-size:12px;color:var(--txt2);font-weight:300;line-height:1.7}.quiz-rec strong{color:var(--txt);font-weight:700}
+.faq{margin-bottom:7px}.faq-q{font-size:12px;font-weight:700;margin-bottom:2px;display:flex;align-items:flex-start;gap:5px}
+.faq-q::before{content:'Q';background:var(--gld);color:#111;width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;flex-shrink:0;margin-top:2px}
+.faq-a{font-size:11px;color:var(--txt2);font-weight:300;line-height:1.7;padding-right:22px;margin-bottom:10px}
+.terms{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.term{display:flex;align-items:flex-start;gap:4px;font-size:10px;color:var(--txt2);font-weight:300;line-height:1.5}.term strong{font-weight:600}.term .f{font-size:9px;flex-shrink:0;margin-top:2px}
+/* Cart */
+.cart{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1.5px solid var(--gld-gl);padding:10px 16px;display:none;z-index:60;backdrop-filter:blur(8px)}
+.cart.show{display:block}
+.cart-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.cart-count{font-size:12px;font-weight:700}.cart-count .num{color:var(--gld)}.cart-total{font-size:16px;font-weight:900;color:var(--gld)}
+.cart-items{max-height:120px;overflow-y:auto;margin-bottom:8px}
+.cart-item{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--brd);font-size:11px}
+.cart-item-nm{flex:1;font-weight:500}.cart-item-pr{color:var(--gld);font-weight:700}.cart-item-rm{background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;padding:0 4px}
+.cart-wa{width:100%;padding:10px;border-radius:var(--rs);background:var(--grn);color:#fff;border:none;font-family:'Heebo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:block;text-align:center;transition:var(--tr)}
+.cart-wa:hover{background:var(--grn-h)}
+/* Availability */
+.avail{background:var(--card);border:1px solid var(--brd2);border-radius:var(--rm);padding:12px;margin-bottom:14px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.avail-month{text-align:center;padding:6px 10px;border-radius:var(--rs);background:var(--card2);min-width:70px}
+.avail-month-nm{font-size:9px;color:var(--txt3);font-weight:600}.avail-month-slots{font-size:16px;font-weight:900;color:var(--gld)}.avail-month-lbl{font-size:8px;color:var(--txt3)}
+/* Exit popup */
+.exit-pop{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:none;align-items:center;justify-content:center}
+.exit-pop.show{display:flex}
+.exit-box{background:var(--card);border:2px solid var(--gld);border-radius:var(--rl);padding:24px 20px;max-width:380px;width:90%;text-align:center;position:relative}
+.exit-box h3{font-size:18px;font-weight:900;margin-bottom:6px}.exit-box p{font-size:12px;color:var(--txt2);margin-bottom:12px}
+.exit-close{position:absolute;top:8px;left:8px;background:none;border:none;color:var(--txt3);font-size:16px;cursor:pointer}
+/* Compare modal */
+.compare{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100;display:none;align-items:flex-start;justify-content:center;padding-top:60px;overflow-y:auto}
+.compare.show{display:flex}
+.compare-box{background:var(--card);border-radius:var(--rl);padding:20px;max-width:700px;width:95%;position:relative}
+.compare-close{position:absolute;top:10px;left:10px;background:var(--card3);border:none;color:var(--txt);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px}
+.compare-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:12px}
+.compare-table th{padding:8px;background:var(--card2);color:var(--gld);font-weight:700;text-align:center;border-bottom:1px solid var(--brd2)}
+.compare-table td{padding:6px 8px;text-align:center;border-bottom:1px solid var(--brd);color:var(--txt2)}
+.compare-table td:first-child{text-align:right;font-weight:600;color:var(--txt)}
+.compare-table .yes{color:var(--gld)}
+.compare-table .no{color:var(--txt3)}
+/* Video modal */
+.vmodal{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:100;display:none;align-items:center;justify-content:center}
+.vmodal.show{display:flex}
+.vmodal-box{max-width:640px;width:95%;aspect-ratio:16/9;position:relative}
+.vmodal-close{position:absolute;top:-30px;left:0;background:none;border:none;color:#fff;font-size:24px;cursor:pointer}
+/* Share */
+.share-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:var(--rf);border:1px solid var(--brd2);background:transparent;font-family:'Heebo',sans-serif;font-size:9px;font-weight:600;color:var(--txt3);cursor:pointer;transition:var(--tr)}
+.share-btn:hover{border-color:var(--gld);color:var(--gld)}
+/* WA fab */
+.cart.show ~ .wa-fab,.cart-bar.show ~ .wa-fab{bottom:auto;display:none}
+.wa-fab{position:fixed;bottom:20px;left:20px;width:48px;height:48px;border-radius:50%;background:var(--grn);color:#fff;border:none;font-size:22px;cursor:pointer;z-index:55;display:flex;align-items:center;justify-content:center;text-decoration:none;animation:waGlow 3s ease infinite;transition:var(--tr)}
+.wa-fab:hover{transform:scale(1.1)}
+.ftr{text-align:center;padding:16px 0;border-top:1px solid var(--brd);margin-top:32px}.ftr p{font-size:9px;color:var(--txt3)}
+@media(max-width:700px){.g2,.g3,.reviews,.fx-grid,.terms{grid-template-columns:1fr}.fx-grid{grid-template-columns:repeat(2,1fr)}.hub{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.wrap{padding:0 14px}}
+@media print{.wa-fab,.cart,nav,.landing,.exit-pop{display:none}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<!-- ═══ LANDING SCREEN ═══ -->
+<div class="landing" id="landing">
+<div class="landing-bg"><iframe src="https://www.youtube.com/embed/VbwWkcc6His?autoplay=1&mute=1&loop=1&playlist=VbwWkcc6His&controls=0&showinfo=0&modestbranding=1&playsinline=1" allow="autoplay" allowfullscreen></iframe></div>
+<div class="landing-ov"></div>
+<div class="landing-content">
+<img class="landing-logo" src="data:image/png;base64,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" alt="Yakir Cohen">
+<h1>הסטנדרט של <span class="gld">התעשייה.</span></h1>
+<div class="landing-sub">20 שנה · 1,500+ אירועים · 5.0 בגוגל · מודיעין</div>
+<div class="landing-date" id="landingDate"></div>
+
+<div class="hub" id="hubGrid">
+<div class="hub-card" onclick="goRoom('dj')">
+<div class="hub-card-thumb"><img src="https://img.youtube.com/vi/lmYykgKAdUg/mqdefault.jpg" alt="DJ"><div class="hub-card-play">▶</div><div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);padding:2px 10px;border-radius:var(--rf);background:rgba(0,0,0,.6);font-size:8px;color:var(--gld);font-weight:700;opacity:0;transition:var(--tr)" class="hc-enter">כניסה ←</div></div>
+<div class="hub-card-tag">🔥 ביקוש</div>
+<div class="hub-card-nm">🎧 DJ לאירועים</div>
+<div class="hub-card-rng">₪5,000 – ₪9,800</div>
+</div>
+<div class="hub-card" onclick="goRoom('music')">
+<div class="hub-card-thumb"><img src="https://img.youtube.com/vi/K8c9xAHWN-g/mqdefault.jpg" alt="Music"><div class="hub-card-play">▶</div><div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);padding:2px 10px;border-radius:var(--rf);background:rgba(0,0,0,.6);font-size:8px;color:var(--gld);font-weight:700;opacity:0;transition:var(--tr)" class="hc-enter">כניסה ←</div></div>
+<div class="hub-card-nm">🎵 הפקה מוזיקלית</div>
+<div class="hub-card-rng">₪1,280 – ₪5,400</div>
+</div>
+<div class="hub-card" onclick="goRoom('events')">
+<div class="hub-card-thumb"><img src="https://img.youtube.com/vi/K1oAL8qg1W0/mqdefault.jpg" alt="Events"><div class="hub-card-play">▶</div><div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);padding:2px 10px;border-radius:var(--rf);background:rgba(0,0,0,.6);font-size:8px;color:var(--gld);font-weight:700;opacity:0;transition:var(--tr)" class="hc-enter">כניסה ←</div></div>
+<div class="hub-card-tag">⭐ פופולרי</div>
+<div class="hub-card-nm">🎪 אטרקציות</div>
+<div class="hub-card-rng">₪750 – ₪22,000</div>
+</div>
+<div class="hub-card" onclick="goRoom('online')">
+<div class="hub-card-thumb"><img src="https://img.youtube.com/vi/yyWT2UGlPNM/mqdefault.jpg" alt="AI"><div class="hub-card-play">▶</div><div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);padding:2px 10px;border-radius:var(--rf);background:rgba(0,0,0,.6);font-size:8px;color:var(--gld);font-weight:700;opacity:0;transition:var(--tr)" class="hc-enter">כניסה ←</div></div>
+<div class="hub-card-nm">🤖 אונליין & AI</div>
+<div class="hub-card-rng">₪180 – ₪1,800</div>
+</div>
+<div class="hub-card" onclick="goRoom('podcast')">
+<div class="hub-card-thumb"><img src="https://img.youtube.com/vi/Fs8iQJgQ5nA/mqdefault.jpg" alt="Podcast"><div class="hub-card-play">▶</div><div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);padding:2px 10px;border-radius:var(--rf);background:rgba(0,0,0,.6);font-size:8px;color:var(--gld);font-weight:700;opacity:0;transition:var(--tr)" class="hc-enter">כניסה ←</div></div>
+<div class="hub-card-nm">🎙️ פודקאסט</div>
+<div class="hub-card-rng">₪1,980 – ₪6,900</div>
+</div>
+<div class="hub-card" onclick="goRoom('academy')">
+<div class="hub-card-thumb"><img src="https://img.youtube.com/vi/hiCU1Rarb5U/mqdefault.jpg" alt="Academy"><div class="hub-card-play">▶</div><div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);padding:2px 10px;border-radius:var(--rf);background:rgba(0,0,0,.6);font-size:8px;color:var(--gld);font-weight:700;opacity:0;transition:var(--tr)" class="hc-enter">כניסה ←</div></div>
+<div class="hub-card-nm">🎓 אקדמיה & ליווי</div>
+<div class="hub-card-rng">₪450 – ₪21,500</div>
+</div>
+</div>
+
+<!-- Rotating reviews -->
+<div class="landing-review" id="landingReviews">
+<div class="landing-rev active"><div class="landing-rev-txt">"רמה אחת מעל"</div><div class="landing-rev-author">- יצחק פנחסי · בת מצווה</div></div>
+<div class="landing-rev"><div class="landing-rev-txt">"התוצאה מושלמת. מרגש, מכובד ומקצועי"</div><div class="landing-rev-author">- גילה ניסניאן · יום הולדת 70</div></div>
+<div class="landing-rev"><div class="landing-rev-txt">"חוויה מדהימה, יחס אישי ומפרגן"</div><div class="landing-rev-author">- רינה ארליך · הקלטת שיר</div></div>
+<div class="landing-rev"><div class="landing-rev-txt">"מיקס ומאסטרינג ברמה גבוהה מאוד"</div><div class="landing-rev-author">- ואסיהון ביהונן · DJ DEM-DEM</div></div>
+</div>
+
+<!-- Trust bar -->
+<div class="landing-trust">
+<div class="landing-trust-track" id="ltTrack"></div></div>
+</div>
+<div class="landing-ctrls">
+<button class="landing-ctrl" onclick="goRoom('all')">📋 ראו הכל</button>
+<button class="landing-ctrl" onclick="toggleTheme()">🌙 / ☀️</button>
+</div>
+</div>
+<!-- ═══ VIDEO MODAL ═══ -->
+<div class="vmodal" id="vModal" onclick="if(event.target===this)this.classList.remove('show')">
+<div class="vmodal-box"><button class="vmodal-close" onclick="document.getElementById('vModal').classList.remove('show')">✕</button>
+<div id="vContent"></div></div></div>
+
+<!-- ═══ EXIT POPUP ═══ -->
+<div class="exit-pop" id="exitPop" onclick="if(event.target===this)this.classList.remove('show')">
+<div class="exit-box"><button class="exit-close" onclick="document.getElementById('exitPop').classList.remove('show')">✕</button>
+<h3>🎯 לפני שהולכים!</h3>
+<p>רוצים שנבנה לכם הצעה מותאמת?<br>השאירו הודעה קצרה בוואטסאפ - ואחזור תוך שעות.</p>
+<a class="cta-btn" href="https://wa.me/972587555456?text=%D7%94%D7%99%D7%99+%D7%99%D7%A7%D7%99%D7%A8!+%D7%A8%D7%90%D7%99%D7%AA%D7%99+%D7%90%D7%AA+%D7%94%D7%9E%D7%97%D7%99%D7%A8%D7%95%D7%9F+%D7%95%D7%90%D7%A9%D7%9E%D7%97+%D7%9C%D7%94%D7%A6%D7%A2%D7%94+%D7%9E%D7%95%D7%AA%D7%90%D7%9E%D7%AA" target="_blank" style="margin-top:8px">💬 שלחו הודעה בוואטסאפ</a>
+</div></div>
+
+<!-- ═══ COMPARE MODAL ═══ -->
+<div class="compare" id="compareModal" onclick="if(event.target===this)this.classList.remove('show')">
+<div class="compare-box">
+<button class="compare-close" onclick="document.getElementById('compareModal').classList.remove('show')">✕</button>
+<h3 style="font-size:16px;font-weight:800">📊 השוואת חבילות מוזיקה</h3>
+<table class="compare-table">
+<tr><th></th><th>🥉 Standard<br>₪1,280</th><th>🥇 Gold<br>₪2,280</th><th>👑 VIP<br>₪5,400</th></tr>
+<tr><td>הקלטה באולפן</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+<tr><td>ליטוש שירה</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+<tr><td>מיקס מקצועי</td><td class="yes">בסיסי</td><td class="yes">רב-שכבתי</td><td class="yes">רב-שכבתי</td></tr>
+<tr><td>Vocal Tuning (Melodyne)</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+<tr><td>מאסטרינג פרימיום</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+<tr><td>הפצה דיגיטלית</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+<tr><td>קליפ 4K</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+<tr><td>כתיבת מילים/לחן</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+<tr><td>קידום דיגיטלי</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+<tr><td>סבבי תיקונים</td><td>1</td><td>2</td><td class="yes">∞</td></tr>
+<tr><td>שקט נפשי</td><td>85%</td><td>90%</td><td class="yes">100%</td></tr>
+</table>
+</div></div>
+
+<!-- ═══ CART ═══ -->
+<div class="cart" id="cart">
+<div class="cart-top"><span class="cart-count">🛒 <span class="num" id="cartN">0</span> פריטים</span><span class="cart-total" id="cartT">₪0</span></div>
+<div class="cart-items" id="cartItems"></div>
+<div id="cXS" style="display:none;font-size:9px;color:var(--gld);background:var(--gld-bg);padding:4px 8px;border-radius:var(--rs);margin-bottom:6px;cursor:pointer"></div>
+<div class="guarantee" style="margin:6px 0"><div class="guarantee-ico">🛡️</div><div class="guarantee-txt"><strong>אחריות:</strong> לא מרוצים? לא משלמים. עד 3 סבבי תיקונים כלולים.</div></div>
+<a class="cart-wa" id="cartWA" href="#" target="_blank">💬 שלח הזמנה בוואטסאפ</a>
+</div>
+
+<!-- ═══ WA FAB ═══ -->
+<a class="wa-fab" href="https://wa.me/972587555456" target="_blank">💬</a>
+
+<!-- ═══ NAV ═══ -->
+<nav id="mainNav">
+<div class="nav-row">
+<button class="nav-home" onclick="goHome()">🏠</button>
+<img class="nav-logo-sm" src="data:image/png;base64,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" alt="YKP">
+<div class="nav-scroll">
+<a class="nav-a" href="#" onclick="event.preventDefault();goRoom('dj')">🎧 DJ</a>
+<a class="nav-a" href="#" onclick="event.preventDefault();goRoom('music')">🎵 מוזיקה</a>
+<a class="nav-a" href="#" onclick="event.preventDefault();goRoom('events')">🎪 אירועים</a>
+<a class="nav-a" href="#" onclick="event.preventDefault();goRoom('online')">🤖 אונליין</a>
+<a class="nav-a" href="#" onclick="event.preventDefault();goRoom('podcast')">🎙 פודקאסט</a>
+<a class="nav-a" href="#" onclick="event.preventDefault();goRoom('academy')">🎓 אקדמיה</a>
+<a class="nav-a" href="#" onclick="event.preventDefault();goRoom('faq')">❓ FAQ</a>
+</div>
+<div class="nav-toggles">
+<div class="ntgl" id="b2bT" onclick="toggleB2B()"><div class="ntgl-sw"></div><div class="ntgl-lbl">ארגונים</div></div>
+<div class="ntgl" id="themeT" onclick="toggleTheme()"><div class="ntgl-sw"></div><div class="ntgl-lbl">בהיר</div></div>
+</div>
+<div class="nav-date" id="navDate"></div>
+</div>
+</nav>
+
+<div class="wrap">
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ROOM: DJ                                                   -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="room" id="room-dj">
+<button style="display:flex;align-items:center;gap:4px;padding:8px 0;cursor:pointer;color:var(--gld);font-size:11px;font-weight:600;border:none;background:none;font-family:Heebo,sans-serif" onclick="goHome()">← חזור לתפריט הראשי</button>
+<div style="font-size:8.5px;color:var(--txt3);margin-bottom:8px" class="room-dt"></div>
+<section class="sec"><div class="sec-hdr"><span class="sec-ico">🎧</span><span class="sec-t">הנדסת אירוע: יקיר כהן</span><button class="share-btn" onclick="shareRoom('dj')">📤 שתפו</button></div></section>
+
+<!-- DJ Video -->
+<div class="vid-embed" onclick="playVid(this,'lmYykgKAdUg')"><img src="https://img.youtube.com/vi/lmYykgKAdUg/maxresdefault.jpg" alt="DJ"><div class="vid-embed-play">▶</div><div class="vid-embed-label">🎬 הכירו את יקיר כהן</div></div>
+
+<div class="prose an"><strong>לא "עוד תקליטן". מנהל אנרגיה.</strong><br>יש הבדל תהומי בין "לשים שירים" לבין להחזיק רחבה של 400 איש באוויר 6 שעות. ההבדל הוא לא בציוד, אלא <span class="gld">בקילומטראז'.</span></div>
+
+<div class="vs">🏆 המסלול</div>
+<div class="timeline an d1">
+<div class="tl-item"><div class="tl-title">🔥 אשקלונה (2 שנים)</div><div class="tl-desc">3 מסיבות ביום + אפטר כל לילה. <strong>קריאת קהל בעיניים עצומות.</strong></div></div>
+<div class="tl-item"><div class="tl-title">⭐ אומן 17 + עשרות מועדונים</div><div class="tl-desc">רזידנט. <strong>דיוק, טכניקה, סאונד בינלאומי.</strong></div></div>
+<div class="tl-item"><div class="tl-title">💎 היום (37): 1,500+ אירועים</div><div class="tl-desc">הדיוק של המועדון → <strong>האלגנטיות של החופה.</strong></div></div>
+</div>
+
+<div class="prose an d2"><strong>פסיכולוגיה:</strong> אירוע = <span class="gld">ניהול רגשי</span>. סריקת חדר, זיהוי נפילות לפני שקורות. <strong>חיבור עולמות:</strong> דתי/חילוני/מזרחי/פופ - גשרים מוזיקליים. <strong>One Stop Shop:</strong> ליין-אפ, אולם, הגברה, תאורה, אטרקציות, לו"ז. <strong>אדם אחד.</strong></div>
+
+<!-- DJ from event -->
+<div class="vid-embed" onclick="playVid(this,'HYTe5-qdQsg')" style="max-width:300px"><img src="https://img.youtube.com/vi/HYTe5-qdQsg/mqdefault.jpg" alt="DJ Live"><div class="vid-embed-play">▶</div><div class="vid-embed-label">🎧 מהעמדה באירוע</div></div>
+
+<!-- Availability -->
+<div class="vs">📅 זמינות</div>
+<div class="avail" id="djAvail"></div>
+
+<div class="g2 an d3">
+<div class="card">
+<div class="card-nm">🎧 DJ פרימיום - צוות</div><div class="card-sub">4 שעות · הגברה + תאורה</div>
+<div class="card-icons"><div class="card-icn" data-tip="רמקולים">🔊</div><div class="card-icn" data-tip="עמדה">🎛️</div><div class="card-icn" data-tip="תאורה">💡</div><div class="card-icn" data-tip="מיקרופון">🎤</div></div>
+<div class="card-from">החל מ-</div><div class="card-price pr" data-vat="inc" data-base="5000">₪5,000</div><div class="card-vat vl">כולל מע"מ</div>
+<div class="card-value">כולל הובלה, הקמה, פירוק ותיאום מוזיקלי</div>
+<div class="peace"><span class="peace-lbl">שקט נפשי</span><div class="peace-bar"><div class="peace-fill" style="width:85%"></div></div><span class="peace-pct">85%</span></div>
+<ul class="card-ft"><li><span class="ck">✦</span> DJ מקצועי מהצוות הקבוע</li><li><span class="ck">✦</span> מערכת הגברה + תאורה</li><li><span class="ck">✦</span> +500₪/שעה נוספת</li></ul>
+<button class="int-btn" onclick="addC(this,'DJ צוות (4 שעות)',5000)">+ הוסף להצעה</button>
+</div>
+<div class="card card--vip">
+<div class="card-badge">👑 יקיר כהן</div>
+<div class="card-nm">🎧 DJ יקיר כהן אישית</div><div class="card-sub">5 שעות · הכל כלול · ניהול מלא</div>
+<div class="card-icons"><div class="card-icn" data-tip="רמקולים">🔊</div><div class="card-icn" data-tip="עמדה">🎛️</div><div class="card-icn" data-tip="תאורה">💡</div><div class="card-icn" data-tip="מיקרופון">🎤</div><div class="card-icn" data-tip="ניהול">📋</div><div class="card-icn" data-tip="ייעוץ">🎵</div></div>
+<div class="card-from">החל מ-</div><div class="card-price pr" data-vat="inc" data-base="9800" style="color:var(--gld)">₪9,800</div><div class="card-vat vl">כולל מע"מ</div>
+<div class="card-value">ניהול מוזיקלי, אפיון, תיאום ספקים, ליין-אפ</div>
+<div class="peace"><span class="peace-lbl">שקט נפשי</span><div class="peace-bar"><div class="peace-fill" style="width:100%"></div></div><span class="peace-pct">100%</span></div>
+<ul class="card-ft"><li><span class="ck">✦</span> 20 שנה · 1,500+ אירועים</li><li><span class="ck">✦</span> One Stop Shop</li><li><span class="ck">✦</span> +500₪/שעה</li></ul>
+<button class="int-btn int-btn--gld" onclick="addC(this,'DJ יקיר כהן אישית',9800)">+ הוסף להצעה 👑</button>
+</div></div>
+<div class="prose" style="font-size:11px;color:var(--txt3)"><strong style="color:var(--txt2)">למה ₪9,800?</strong> 20 שנה, ניהול אנרגיה, ייעוץ, תיאום ספקים, One Stop Shop. ב-5,000₪ - DJ מצוין מהצוות, אבל לא את הקילומטראז'.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ROOM: MUSIC                                                -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="room" id="room-music">
+<button style="display:flex;align-items:center;gap:4px;padding:8px 0;cursor:pointer;color:var(--gld);font-size:11px;font-weight:600;border:none;background:none;font-family:Heebo,sans-serif" onclick="goHome()">← חזור לתפריט הראשי</button>
+<div style="font-size:8.5px;color:var(--txt3);margin-bottom:8px" class="room-dt"></div>
+<section class="sec"><div class="sec-hdr"><span class="sec-ico">🎵</span><span class="sec-t">הפקה מוזיקלית</span><span class="sec-sub">3 חבילות · כולל מע"מ</span><button class="share-btn" onclick="shareRoom('music')">📤 שתפו</button></div></section>
+
+<div class="vid-embed" onclick="playVid(this,'K8c9xAHWN-g')"><img src="https://img.youtube.com/vi/K8c9xAHWN-g/maxresdefault.jpg" alt="Production"><div class="vid-embed-play">▶</div><div class="vid-embed-label">🎬 הפקת שיר מההתחלה לסוף</div></div>
+
+<div class="prose an">שיר מוגמר, מוכן להשמעה. בלי לחץ זמן. <strong>מפיק צמוד + שימוש מלא באולפן.</strong></div>
+
+<!-- Availability -->
+<div class="avail" id="musicAvail"></div>
+
+<button class="share-btn" onclick="document.getElementById('compareModal').classList.add('show')" style="margin-bottom:10px">📊 השוואת חבילות</button>
+
+<div class="g3 an d1">
+<div class="card">
+<div class="card-nm">🥉 Standard</div><div class="card-sub">ברכה / מתנה / דמו</div>
+<div class="card-icons"><div class="card-icn" data-tip="מיקרופון">🎤</div><div class="card-icn" data-tip="עריכה">✂️</div><div class="card-icn" data-tip="מיקס">🎚️</div></div>
+<div class="card-from">החל מ-</div><div class="card-price pr" data-vat="inc" data-base="1280">₪1,280</div><div class="card-vat vl">כולל מע"מ</div>
+<div class="card-value">סשן + ליטוש + מיקס נקי</div>
+<div class="peace"><span class="peace-lbl">שקט נפשי</span><div class="peace-bar"><div class="peace-fill" style="width:85%"></div></div><span class="peace-pct">85%</span></div>
+<ul class="card-ft"><li><span class="ck">✦</span> הקלטה עד ביצוע מושלם</li><li><span class="ck">✦</span> ליטוש + מיקס סופי</li><li><span class="ck">✦</span> סבב תיקונים · WAV+MP3</li></ul>
+<button class="int-btn" onclick="addC(this,'Standard מוזיקה',1280)">+ הוסף להצעה</button>
+</div>
+<div class="card card--pop">
+<div class="card-badge">⭐ מועדפת</div>
+<div class="card-nm">🥇 Gold</div><div class="card-sub">סינגל · ספוטיפיי / רדיו</div>
+<div class="card-icons"><div class="card-icn" data-tip="מיקרופון">🎤</div><div class="card-icn" data-tip="Melodyne">🎯</div><div class="card-icn" data-tip="מיקס">🎚️</div><div class="card-icn" data-tip="מאסטרינג">📊</div><div class="card-icn" data-tip="הפצה">📡</div></div>
+<div class="card-from">החל מ-</div><div class="card-price pr" data-vat="inc" data-base="2280">₪2,280</div><div class="card-vat vl">כולל מע"מ</div>
+<div class="card-value">ליווי אומנותי + Vocal Tuning + מיקס + מאסטרינג + הפצה</div>
+<div class="peace"><span class="peace-lbl">שקט נפשי</span><div class="peace-bar"><div class="peace-fill" style="width:90%"></div></div><span class="peace-pct">90%</span></div>
+<ul class="card-ft"><li><span class="ck">✦</span> עריכה ידנית קפדנית</li><li><span class="ck">✦</span> מיקס+מאסטרינג פרימיום</li><li><span class="ck">✦</span> 2 סבבים · הפצה</li></ul>
+<button class="int-btn int-btn--grn" onclick="addC(this,'Gold מוזיקה',2280)">+ הוסף להצעה ⭐</button>
+</div>
+<div class="card card--vip">
+<div class="card-badge">👑 360°</div>
+<div class="card-nm">👑 VIP</div><div class="card-sub">סינגל + קליפ + הפצה + קידום</div>
+<div class="card-icons"><div class="card-icn" data-tip="מיקרופון">🎤</div><div class="card-icn" data-tip="Melodyne">🎯</div><div class="card-icn" data-tip="מיקס">🎚️</div><div class="card-icn" data-tip="מאסטרינג">📊</div><div class="card-icn" data-tip="קליפ">🎬</div><div class="card-icn" data-tip="הפצה">📡</div><div class="card-icn" data-tip="קידום">📱</div></div>
+<div class="card-from">החל מ-</div><div class="card-price pr" data-vat="inc" data-base="5400" style="color:var(--gld)">₪5,400</div><div class="card-vat vl">כולל מע"מ</div>
+<div class="card-value">הפקה מלאה - שיר + קליפ 4K + כתיבה + הפצה + קידום</div>
+<div class="peace"><span class="peace-lbl">שקט נפשי</span><div class="peace-bar"><div class="peace-fill" style="width:100%"></div></div><span class="peace-pct">100%</span></div>
+<ul class="card-ft"><li><span class="ck">✦</span> הכל ב-Gold + קליפ + כתיבה</li><li><span class="ck">✦</span> תיקונים ∞</li><li><span class="ck">✦</span> הפצה + קידום</li></ul>
+<button class="int-btn int-btn--gld" onclick="addC(this,'VIP מוזיקה',5400)">+ הוסף להצעה 👑</button>
+</div></div>
+
+<!-- Price breakdown -->
+<div class="vs">💰 פירוט Gold</div>
+<table class="ptable">
+<tr><th>מרכיב</th><th>מה זה בפועל</th><th>ערך</th></tr>
+<tr><td>הקלטה</td><td>עד 3 שעות · מיקרופון מקצועי<span class="explain">אתם שרים, אני דואג לשאר</span></td><td class="price-el" data-base="850">₪850</td></tr>
+<tr><td>עריכה + תיקון</td><td>Melodyne · דיוק · חיתוך<span class="explain">הקול שלכם בגרסה הטובה</span></td><td class="price-el" data-base="420">₪420</td></tr>
+<tr><td>מיקס</td><td>רב-שכבתי · אפקטים · EQ<span class="explain">מהקלטה → סאונד רדיו</span></td><td class="price-el" data-base="520">₪520</td></tr>
+<tr><td>מאסטרינג</td><td>סטנדרט סטרימינג<span class="explain">מושלם בכל רמקול</span></td><td class="price-el" data-base="280">₪280</td></tr>
+<tr><td>הפצה</td><td>ספוטיפיי · אפל · יוטיוב<span class="explain">אני מעלה - אתם משתפים</span></td><td class="price-el" data-base="210">₪210</td></tr>
+<tr class="ptable-total"><td colspan="2"><strong>סה"כ Gold</strong></td><td class="price-el" data-base="2280"><strong>₪2,280</strong></td></tr>
+</table>
+
+<!-- Videos -->
+<div class="g2">
+<div class="vid-embed" onclick="playVid(this,'PCmsH0BLcXg')" style="aspect-ratio:9/16;max-width:200px"><img src="https://img.youtube.com/vi/PCmsH0BLcXg/mqdefault.jpg" alt="Before After"><div class="vid-embed-play">▶</div><div class="vid-embed-label">🔊 לפני / אחרי</div></div>
+</div>
+<div class="vid-embed" onclick="playVid(this,'D3JV9SDY6GY')"><img src="https://img.youtube.com/vi/D3JV9SDY6GY/maxresdefault.jpg" loading="lazy" alt="Yuval"><div class="vid-embed-play">▶</div><div class="vid-embed-label">🤖 יובל המבולבל - תיקון AI</div></div>
+<div class="vid-embed" onclick="playVid(this,'rcIcBMb1FL4')"><img src="https://img.youtube.com/vi/rcIcBMb1FL4/maxresdefault.jpg" loading="lazy" alt="Parody"><div class="vid-embed-play">▶</div><div class="vid-embed-label">😂 פארודיות - מיליוני צפיות</div></div>
+<div class="vid-embed" onclick="playVid(this,'RwpmJzMODsU')" style="aspect-ratio:9/16;max-width:200px"><img src="https://img.youtube.com/vi/RwpmJzMODsU/mqdefault.jpg" alt="Studio"><div class="vid-embed-play">▶</div><div class="vid-embed-label">🎤 הקלטה באולפן</div></div>
+</div>
+
+<div class="vid-embed" onclick="playVid(this,'IOKLBYneGfQ')" style="max-width:300px"><img src="https://img.youtube.com/vi/IOKLBYneGfQ/mqdefault.jpg" alt="Cheap Studio"><div class="vid-embed-play">▶</div><div class="vid-embed-label">😂 "אולפן הקלטות זול"</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ROOM: EVENTS                                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="room" id="room-events">
+<button style="display:flex;align-items:center;gap:4px;padding:8px 0;cursor:pointer;color:var(--gld);font-size:11px;font-weight:600;border:none;background:none;font-family:Heebo,sans-serif" onclick="goHome()">← חזור לתפריט הראשי</button>
+<div style="font-size:8.5px;color:var(--txt3);margin-bottom:8px" class="room-dt"></div>
+<section class="sec"><div class="sec-hdr"><span class="sec-ico">🎪</span><span class="sec-t">אטרקציות לאירועים</span><span class="sec-sub">כולל מע"מ</span><button class="share-btn" onclick="shareRoom('events')">📤 שתפו</button></div></section>
+
+<div class="vid-embed" onclick="playVid(this,'K1oAL8qg1W0')" style="max-width:300px"><img src="https://img.youtube.com/vi/K1oAL8qg1W0/mqdefault.jpg" alt="Effects"><div class="vid-embed-play">▶</div><div class="vid-embed-label">💨 אפקטים בפעולה</div></div>
+
+<div class="evt an"><div class="evt-top"><span class="evt-ico">💍</span><span class="evt-nm b2b-hide">חתונה</span><span class="evt-nm b2b-show" style="display:none">אירוע חברה / השקה</span><span class="evt-rng">₪8,000 – ₪22,000</span></div>
+<div class="evt-desc">רגע הכניסה עם עשן כבד ופסקול דרמטי. הריקוד הראשון עם זיקוקים. <strong>זה מה שיזכרו - לנצח.</strong></div>
+<table class="wed-bk"><tr><td>DJ יקיר (5 שעות)</td><td class="price-el" data-base="9800">₪9,800</td></tr><tr><td>פסקול כניסה + קריינות</td><td class="price-el" data-base="980">₪980</td></tr><tr><td>עשן + זיקוקים</td><td class="price-el" data-base="3000">₪3,000</td></tr><tr><td>אולפן נייד</td><td class="price-el" data-base="5000">₪5,000</td></tr><tr><td>מצגת</td><td class="price-el" data-base="750">₪750</td></tr><tr><td><strong>חבילה מלאה</strong></td><td class="price-el" data-base="19530"><strong>₪19,530</strong></td></tr></table>
+<button class="int-btn" onclick="waInt('חבילת חתונה מלאה')">מעניין אותי 💍</button></div>
+
+<div class="evt an d1"><div class="evt-top"><span class="evt-ico">🎉</span><span class="evt-nm">בר / בת מצווה</span><span class="evt-rng">₪6,000 – ₪18,000</span></div>
+<div class="evt-desc">"רגע של כוכב", בועות, קצף, אולפן נייד. <strong>האירוע שמדובר בכל הכיתה.</strong></div>
+<button class="int-btn" onclick="waInt('חבילת בר/בת מצווה')">מעניין אותי 🎉</button></div>
+
+<div class="evt an d1"><div class="evt-top"><span class="evt-ico">🎂</span><span class="evt-nm">יום הולדת</span><span class="evt-rng">₪1,500 – ₪8,000</span></div>
+<div class="evt-desc">3 אטרקציות בחבילה. <strong>אתם הגיבורים של המסיבה.</strong></div>
+<button class="int-btn" onclick="waInt('חבילת יום הולדת')">מעניין אותי 🎂</button></div>
+
+<!-- Krynut video -->
+<div class="vid-embed" onclick="playVid(this,'EhWehkdTdc0')" style="max-width:300px"><img src="https://img.youtube.com/vi/EhWehkdTdc0/mqdefault.jpg" alt="Entry"><div class="vid-embed-play">▶</div><div class="vid-embed-label">🎬 קריינות כניסה לאירוע</div></div>
+
+<!-- Effects Picker -->
+<div class="vs" style="margin-top:14px">💨 בחרו אפקטים - 3 = חבילה בהנחה!</div>
+<div class="prose" style="font-size:11px">בודד: <strong>₪1,500</strong> · 3 = <strong>₪3,540</strong> (חיסכון ₪960!)</div>
+<div class="fx-grid an" id="fxGrid">
+<div class="fx" onclick="toggleFx(this)" data-name="עשן כבד" data-price="1500"><span class="fx-ico">💨</span><div class="fx-nm">עשן כבד</div><div class="fx-price">₪1,500</div><div class="fx-check">✓</div></div>
+<div class="fx" onclick="toggleFx(this)" data-name="בועות סבון" data-price="2000"><span class="fx-ico">🫧</span><div class="fx-nm">בועות סבון</div><div class="fx-price">₪2,000</div><div class="fx-check">✓</div></div>
+<div class="fx" onclick="toggleFx(this)" data-name="בלונים" data-price="1500"><span class="fx-ico">🎈</span><div class="fx-nm">בלונים</div><div class="fx-price">₪1,500</div><div class="fx-check">✓</div></div>
+<div class="fx" onclick="toggleFx(this)" data-name="זיקוקים קרים" data-price="1500"><span class="fx-ico">❄️</span><div class="fx-nm">זיקוקים</div><div class="fx-price">₪1,500</div><div class="fx-check">✓</div></div>
+<div class="fx" onclick="toggleFx(this)" data-name="קונפטי" data-price="1500"><span class="fx-ico">🎊</span><div class="fx-nm">קונפטי</div><div class="fx-price">₪1,500</div><div class="fx-check">✓</div></div>
+<div class="fx" onclick="toggleFx(this)" data-name="עשן צבעוני" data-price="1500"><span class="fx-ico">🌈</span><div class="fx-nm">עשן צבעוני</div><div class="fx-price">₪1,500</div><div class="fx-check">✓</div></div>
+<div class="fx" onclick="toggleFx(this)" data-name="רובה עשן" data-price="1500"><span class="fx-ico">🔫</span><div class="fx-nm">רובה עשן</div><div class="fx-price">₪1,500</div><div class="fx-check">✓</div></div>
+<div class="fx" onclick="toggleFx(this)" data-name="קצף" data-price="1500"><span class="fx-ico">🧴</span><div class="fx-nm">קצף</div><div class="fx-price">₪1,500</div><div class="fx-check">✓</div></div>
+<div class="fx" onclick="toggleFx(this)" data-name="LED בועות" data-price="2000"><span class="fx-ico">✨</span><div class="fx-nm">LED</div><div class="fx-price">₪2,000</div><div class="fx-check">✓</div></div>
+</div>
+<div class="fx-bar" id="fxBar"><div><div class="fx-count">בחרת <span class="num" id="fxCount">0</span></div><div class="fx-save" id="fxSave"></div></div><div class="fx-total" id="fxTotal">₪0</div></div>
+<button class="int-btn int-btn--grn" id="fxBtn" style="display:none;margin-bottom:12px" onclick="fxSend()">שלח בחירת אפקטים 💨</button>
+
+<div class="vs">📋 שירותים נוספים</div>
+<div class="srv"><span class="srv-ico">🎤</span><div class="srv-info"><div class="srv-nm">אולפן נייד</div></div><div class="srv-price price-el" data-base="5000">₪5,000</div><button class="srv-int" onclick="addC(this,'אולפן נייד',5000)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">🌟</span><div class="srv-info"><div class="srv-nm">"רגע כוכב" - צוות</div></div><div class="srv-price price-el" data-base="5000">₪5,000</div><button class="srv-int" onclick="addC(this,'רגע כוכב צוות',5000)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">🌟</span><div class="srv-info"><div class="srv-nm">"רגע כוכב" - יקיר</div></div><div class="srv-price price-el" data-base="8000">₪8,000</div><button class="srv-int" onclick="addC(this,'רגע כוכב יקיר',8000)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">🎬</span><div class="srv-info"><div class="srv-nm">פסקול כניסה</div></div><div class="srv-price price-el" data-base="980">₪980</div><button class="srv-int" onclick="addC(this,'פסקול כניסה',980)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">🖼️</span><div class="srv-info"><div class="srv-nm">מצגת תמונות</div></div><div class="srv-price price-el" data-base="750">₪750</div><button class="srv-int" onclick="addC(this,'מצגת',750)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">💡</span><div class="srv-info"><div class="srv-nm">עמדת LED</div></div><div class="srv-price price-el" data-base="1750">₪1,750</div><button class="srv-int" onclick="addC(this,'עמדת LED',1750)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">🥁</span><div class="srv-info"><div class="srv-nm">מתופף</div><div class="srv-desc">+1,500 הגברה · +5,000 DJ</div></div><div class="srv-price price-el" data-base="1500">₪1,500</div><button class="srv-int" onclick="addC(this,'מתופף',1500)">+ הוסף</button></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ROOM: ONLINE                                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="room" id="room-online">
+<button style="display:flex;align-items:center;gap:4px;padding:8px 0;cursor:pointer;color:var(--gld);font-size:11px;font-weight:600;border:none;background:none;font-family:Heebo,sans-serif" onclick="goHome()">← חזור לתפריט הראשי</button>
+<div style="font-size:8.5px;color:var(--txt3);margin-bottom:8px" class="room-dt"></div>
+<section class="sec"><div class="sec-hdr"><span class="sec-ico">🤖</span><span class="sec-t">שירותי אונליין & AI</span><span class="sec-sub">כולל מע"מ · 48-72h</span><button class="share-btn" onclick="shareRoom('online')">📤 שתפו</button></div></section>
+<div class="prose an">שלחו קבצים בוואטסאפ → תוצר מקצועי. <strong>דחוף? +50%.</strong></div>
+
+<div class="vid-embed" onclick="playVid(this,'yyWT2UGlPNM')" style="max-width:300px"><img src="https://img.youtube.com/vi/yyWT2UGlPNM/mqdefault.jpg" alt="AI"><div class="vid-embed-play">▶</div><div class="vid-embed-label">🤖 הסבר AI מיקיר</div></div>
+
+<div class="vs">🔊 סאונד</div>
+<div class="srv"><span class="srv-ico">🔊</span><div class="srv-info"><div class="srv-nm">הצלת הקלטות</div></div><div class="srv-price price-el" data-base="350">₪350</div><button class="srv-int" onclick="addC(this,'הצלת הקלטות',350)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">🎤</span><div class="srv-info"><div class="srv-nm">פיסול קול</div></div><div class="srv-price price-el" data-base="450">₪450</div><button class="srv-int" onclick="addC(this,'פיסול קול',450)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">🎚️</span><div class="srv-info"><div class="srv-nm">מיקס + מאסטרינג</div></div><div class="srv-price price-el" data-base="850">₪850</div><button class="srv-int" onclick="addC(this,'מיקס מאסטרינג',850)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">🎙️</span><div class="srv-info"><div class="srv-nm">עריכת פודקאסט</div></div><div class="srv-price price-el" data-base="550">₪550</div><button class="srv-int" onclick="addC(this,'עריכת פודקאסט',550)">+ הוסף</button></div>
+<div class="vs">🤖 AI</div>
+<div class="srv"><span class="srv-ico">🤖</span><div class="srv-info"><div class="srv-nm">שיבוט קולי AI</div></div><div class="srv-price price-el" data-base="1800">₪1,800</div><button class="srv-int" onclick="addC(this,'שיבוט קולי',1800)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">🗣️</span><div class="srv-info"><div class="srv-nm">דיבוב + שפתיים</div></div><div class="srv-price price-el" data-base="950">₪950</div><button class="srv-int" onclick="addC(this,'דיבוב AI',950)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">🔀</span><div class="srv-info"><div class="srv-nm">הפרדת ערוצים</div></div><div class="srv-price price-el" data-base="350">₪350</div><button class="srv-int" onclick="addC(this,'Stemming',350)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">📈</span><div class="srv-info"><div class="srv-nm">שדרוג תמונה/וידאו</div></div><div class="srv-price price-el" data-base="250">₪250</div><button class="srv-int" onclick="addC(this,'שדרוג AI',250)">+ הוסף</button></div>
+<div class="vs">🎬 וידאו + כתיבה</div>
+<div class="srv"><span class="srv-ico">📱</span><div class="srv-info"><div class="srv-nm">חבילת ויראלי (3 Reels)</div></div><div class="srv-price price-el" data-base="650">₪650</div><button class="srv-int" onclick="addC(this,'ויראלי',650)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">🎬</span><div class="srv-info"><div class="srv-nm">קליפ אירוע</div></div><div class="srv-price price-el" data-base="750">₪750</div><button class="srv-int" onclick="addC(this,'קליפ',750)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">✍️</span><div class="srv-info"><div class="srv-nm">כתיבת מילים</div></div><div class="srv-price price-el" data-base="850">₪850</div><button class="srv-int" onclick="addC(this,'מילים',850)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">🎤</span><div class="srv-info"><div class="srv-nm">נאום/דרשה</div></div><div class="srv-price price-el" data-base="550">₪550</div><button class="srv-int" onclick="addC(this,'נאום',550)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">💌</span><div class="srv-info"><div class="srv-nm">ברכה בחרוזים</div></div><div class="srv-price price-el" data-base="180">₪180</div><button class="srv-int" onclick="addC(this,'ברכה',180)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">📞</span><div class="srv-info"><div class="srv-nm">קריינות IVR</div></div><div class="srv-price price-el" data-base="650">₪650</div><button class="srv-int" onclick="addC(this,'קריינות',650)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">🎵</span><div class="srv-info"><div class="srv-nm">ג'ינגל עסקי</div></div><div class="srv-price price-el" data-base="1200">₪1,200</div><button class="srv-int" onclick="addC(this,'ג׳ינגל',1200)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">💻</span><div class="srv-info"><div class="srv-nm">ייעוץ אולפן (זום)</div></div><div class="srv-price price-el" data-base="450">₪450</div><button class="srv-int" onclick="addC(this,'ייעוץ אולפן',450)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">🔍</span><div class="srv-info"><div class="srv-nm">אנליזה לשיר</div></div><div class="srv-price price-el" data-base="450">₪450</div><button class="srv-int" onclick="addC(this,'אנליזה',450)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">📺</span><div class="srv-info"><div class="srv-nm">שיפור סאונד YouTube</div></div><div class="srv-price price-el" data-base="250">₪250</div><button class="srv-int" onclick="addC(this,'שיפור YouTube',250)">+ הוסף</button></div>
+<div class="srv"><span class="srv-ico">📝</span><div class="srv-info"><div class="srv-nm">תסריט שיווקי</div></div><div class="srv-price price-el" data-base="450">₪450</div><button class="srv-int" onclick="addC(this,'תסריט',450)">+ הוסף</button></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ROOM: PODCAST                                              -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="room" id="room-podcast">
+<button style="display:flex;align-items:center;gap:4px;padding:8px 0;cursor:pointer;color:var(--gld);font-size:11px;font-weight:600;border:none;background:none;font-family:Heebo,sans-serif" onclick="goHome()">← חזור לתפריט הראשי</button>
+<div style="font-size:8.5px;color:var(--txt3);margin-bottom:8px" class="room-dt"></div>
+<section class="sec"><div class="sec-hdr"><span class="sec-ico">🎙️</span><span class="sec-t">פודקאסט & שימור סיפורים</span><button class="share-btn" onclick="shareRoom('podcast')">📤 שתפו</button></div></section>
+
+<div class="vid-embed" onclick="playVid(this,'Fs8iQJgQ5nA')"><img src="https://img.youtube.com/vi/Fs8iQJgQ5nA/maxresdefault.jpg" alt="Podcast"><div class="vid-embed-play">▶</div><div class="vid-embed-label">🎙️ פודקאסטים שלנו</div></div>
+
+<div class="g3 an">
+<div class="card"><div class="card-nm">🎙️ אוטוריטה</div><div class="card-sub">באולפן · 3 מצלמות · Reels</div><div class="card-from">החל מ-</div><div class="card-price pr" data-vat="inc" data-base="1980">₪1,980</div><div class="card-vat vl">כולל מע"מ</div><div class="peace"><span class="peace-lbl">שקט נפשי</span><div class="peace-bar"><div class="peace-fill" style="width:85%"></div></div><span class="peace-pct">85%</span></div><button class="int-btn" onclick="addC(this,'פודקאסט אוטוריטה',1980)">+ הוסף</button></div>
+<div class="card card--pop"><div class="card-badge">⭐</div><div class="card-nm">🚐 VIP עד הבית</div><div class="card-sub">אולפן נייד אליכם</div><div class="card-from">החל מ-</div><div class="card-price pr" data-vat="inc" data-base="2980">₪2,980</div><div class="card-vat vl">כולל מע"מ</div><div class="peace"><span class="peace-lbl">שקט נפשי</span><div class="peace-bar"><div class="peace-fill" style="width:95%"></div></div><span class="peace-pct">95%</span></div><button class="int-btn int-btn--grn" onclick="addC(this,'פודקאסט VIP נייד',2980)">+ הוסף ⭐</button></div>
+<div class="card card--vip"><div class="card-badge">👑</div><div class="card-nm">🏆 4 פרקים/חודש</div><div class="card-sub">₪1,725/פרק · חיסכון ₪1,020</div><div class="card-from">החל מ-</div><div class="card-price pr" data-vat="inc" data-base="6900" style="color:var(--gld)">₪6,900</div><div class="card-vat vl">כולל מע"מ · חודשי</div><div class="peace"><span class="peace-lbl">שקט נפשי</span><div class="peace-bar"><div class="peace-fill" style="width:100%"></div></div><span class="peace-pct">100%</span></div><button class="int-btn int-btn--gld" onclick="addC(this,'מנוי פודקאסט 4/חודש',6900)">+ הוסף 👑</button></div>
+</div>
+
+<!-- Podcast Calculator -->
+<div class="pcalc an"><h3>🧮 בונה חבילה</h3><div class="pcalc-sub">המחיר מתעדכן בזמן אמת</div>
+<div class="pcalc-row"><div><div class="pcalc-lbl">בסיס</div><div class="pcalc-desc">צילום + עריכה + 2 Reels</div></div><div class="pcalc-pr">₪1,980</div></div>
+<div class="pcalc-row"><div><div class="pcalc-lbl">👤 אורחים</div><div class="pcalc-desc">2 כלולים · +₪250</div></div><div class="pcalc-ctrl"><button onclick="podD('g',-1)">−</button><span class="pcalc-v" id="pGV">0</span><button onclick="podD('g',1)">+</button></div><div class="pcalc-pr" id="pGP">-</div></div>
+<div class="pcalc-row"><div><div class="pcalc-lbl">🎬 Reels</div><div class="pcalc-desc">+₪99</div></div><div class="pcalc-ctrl"><button onclick="podD('r',-1)">−</button><span class="pcalc-v" id="pRV">0</span><button onclick="podD('r',1)">+</button></div><div class="pcalc-pr" id="pRP">-</div></div>
+<div class="pcalc-row"><div><div class="pcalc-lbl">📁 גלם</div></div><div class="pcalc-ctrl"><button onclick="podT('raw',this)" style="width:auto;padding:0 8px;font-size:9px">הוסף</button></div><div class="pcalc-pr" id="pRawP">-</div></div>
+<div class="pcalc-row"><div><div class="pcalc-lbl">⚡ דחוף</div></div><div class="pcalc-ctrl"><button onclick="podT('rush',this)" style="width:auto;padding:0 8px;font-size:9px">הוסף</button></div><div class="pcalc-pr" id="pRushP">-</div></div>
+<div class="pcalc-total"><span class="pcalc-total-lbl">סה"כ</span><span class="pcalc-total-pr" id="pTotal">₪1,980</span></div>
+<button class="int-btn int-btn--grn" id="pBtn" onclick="podSend()" style="margin-top:8px">שלח הזמנה 💬</button>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ROOM: ACADEMY                                              -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="room" id="room-academy">
+<button style="display:flex;align-items:center;gap:4px;padding:8px 0;cursor:pointer;color:var(--gld);font-size:11px;font-weight:600;border:none;background:none;font-family:Heebo,sans-serif" onclick="goHome()">← חזור לתפריט הראשי</button>
+<div style="font-size:8.5px;color:var(--txt3);margin-bottom:8px" class="room-dt"></div>
+<section class="sec"><div class="sec-hdr"><span class="sec-ico">🎓</span><span class="sec-t">אקדמיה & ליווי</span><span class="sec-sub">+מע"מ</span><button class="share-btn" onclick="shareRoom('academy')">📤 שתפו</button></div></section>
+
+<div class="vid-embed" onclick="playVid(this,'hiCU1Rarb5U')"><img src="https://img.youtube.com/vi/hiCU1Rarb5U/maxresdefault.jpg" alt="Academy"><div class="vid-embed-play">▶</div><div class="vid-embed-label">🎓 יום חוויה באולפן</div></div>
+
+<div class="cta" style="border-color:var(--gld)"><h3>🎯 מפגש אפיון - ₪450 +מע"מ (₪531)</h3><p>30 דקות · מתקזז מרכישה · בלי מחויבות</p><a class="cta-btn cta-btn--gld" href="https://wa.me/972587555456?text=%D7%9E%D7%A2%D7%A0%D7%99%D7%99%D7%9F+%D7%90%D7%95%D7%AA%D7%99+%D7%9E%D7%A4%D7%92%D7%A9+%D7%90%D7%A4%D7%99%D7%95%D7%9F" target="_blank">קבע מפגש →</a></div>
+
+<div class="g2 an">
+<div class="card"><div class="card-nm">🔷 Master</div><div class="card-sub">חודשי · 4 מפגשים</div><div class="card-from">החל מ-</div><div class="card-price pr" data-vat="inc" data-base="3920">₪3,920</div><div class="card-vat">+מע"מ (₪4,626)</div><div class="peace"><span class="peace-lbl">שקט נפשי</span><div class="peace-bar"><div class="peace-fill" style="width:90%"></div></div><span class="peace-pct">90%</span></div><button class="int-btn" onclick="addC(this,'Master חודשי',3920)">+ הוסף</button></div>
+<div class="card card--vip"><div class="card-badge">👑</div><div class="card-nm">💎 Pro-Partnership</div><div class="card-sub">חצי שנתי · 24 מפגשים</div><div class="card-from">החל מ-</div><div class="card-price pr" data-vat="inc" data-base="21500" style="color:var(--gld)">₪21,500</div><div class="card-vat">+מע"מ (₪25,370)</div><div class="peace"><span class="peace-lbl">שקט נפשי</span><div class="peace-bar"><div class="peace-fill" style="width:100%"></div></div><span class="peace-pct">100%</span></div><button class="int-btn int-btn--gld" onclick="addC(this,'Pro-Partnership',21500)">+ הוסף 👑</button></div>
+</div>
+<div class="g3 an">
+<div class="card"><div class="card-nm">🧪 מעבדת סאונד</div><div class="card-sub">8-16 + הורים · 60 דק'</div><div class="card-price pr" data-vat="inc" data-base="980">₪980 <span style="font-size:9px;color:var(--txt3)">+מע"מ</span></div><button class="int-btn" onclick="addC(this,'מעבדת סאונד',980)">+ הוסף</button></div>
+<div class="card card--pop"><div class="card-badge">⭐</div><div class="card-nm">🎛️ DJ/הפקה/קריינות</div><div class="card-sub">18+ · 90 דק'</div><div class="card-price pr" data-vat="inc" data-base="1470">₪1,470 <span style="font-size:9px;color:var(--txt3)">+מע"מ</span></div><button class="int-btn" style="border-color:var(--org);color:var(--org)" onclick="addC(this,'שיעור DJ/הפקה',1470)">+ הוסף ⭐</button></div>
+<div class="card"><div class="card-nm">🧠 NeverMind</div><div class="card-sub">ביטחון ודיבור · 60 דק'</div><div class="card-price pr" data-vat="inc" data-base="1200">₪1,200 <span style="font-size:9px;color:var(--txt3)">+מע"מ</span></div><button class="int-btn" onclick="addC(this,'NeverMind',1200)">+ הוסף</button></div>
+</div>
+
+<div class="vid-embed" onclick="playVid(this,'_2fWZLeo2jo')"><img src="https://img.youtube.com/vi/_2fWZLeo2jo/maxresdefault.jpg" alt="Imitations"><div class="vid-embed-play">▶</div><div class="vid-embed-label">🎤 חיקויים באולפן</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ROOM: FAQ                                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="room" id="room-faq">
+<button style="display:flex;align-items:center;gap:4px;padding:8px 0;cursor:pointer;color:var(--gld);font-size:11px;font-weight:600;border:none;background:none;font-family:Heebo,sans-serif" onclick="goHome()">← חזור לתפריט הראשי</button>
+<div style="font-size:8.5px;color:var(--txt3);margin-bottom:8px" class="room-dt"></div>
+<section class="sec"><div class="sec-hdr"><span class="sec-ico">❓</span><span class="sec-t">שאלות ותשובות</span></div></section>
+<div class="faq"><div class="faq-q">מע"מ?</div><div class="faq-a"><strong>מוזיקה/אונליין/אירועים:</strong> כלול (18%). <strong>אקדמיה:</strong> +מע"מ.</div></div>
+<div class="faq"><div class="faq-q">תשלום?</div><div class="faq-a"><strong>אונליין:</strong> מראש. <strong>אירועים:</strong> 50%+50%. <strong>אקדמיה:</strong> מראש.</div></div>
+<div class="faq"><div class="faq-q">ביטול?</div><div class="faq-a"><strong>אירועים:</strong> מקדמה ללא החזר. <strong>אקדמיה:</strong> &lt;24h = חיוב.</div></div>
+<div class="faq"><div class="faq-q">אחריות?</div><div class="faq-a">סבב תיקונים כלול. VIP=∞. אונליין נוסף=₪150.</div></div>
+<div class="faq"><div class="faq-q">זמנים?</div><div class="faq-a">אונליין 48-72h (+50% אקספרס). מוזיקה 1-3 שבועות.</div></div>
+<div class="faq"><div class="faq-q">נסיעות?</div><div class="faq-a">מודיעין כלול. מחוץ - בתיאום.</div></div>
+<div class="faq"><div class="faq-q">קבצים?</div><div class="faq-a">Drive/WeTransfer/וואטסאפ. גיבוי 90 יום.</div></div>
+<div class="vs" style="margin-top:12px">💰 עלויות נוספות</div>
+<div class="terms">
+<div class="term"><span class="f">⏱️</span><strong>שעה DJ:</strong> +₪500</div><div class="term"><span class="f">⚡</span><strong>אקספרס:</strong> +50%</div>
+<div class="term"><span class="f">🔄</span><strong>תיקונים:</strong> ₪150</div><div class="term"><span class="f">💨</span><strong>עשן נוסף:</strong> +₪500</div>
+<div class="term"><span class="f">🚗</span><strong>נסיעות:</strong> בתיאום</div><div class="term"><span class="f">🎊</span><strong>קונפטי:</strong> +₪900</div>
+</div>
+<div class="cta"><h3>💬 הצעד הראשון</h3><p>בלי מחויבות. ספרו מה אתם חולמים.</p><a class="cta-btn" href="https://wa.me/972587555456" target="_blank">058-755-5456 💬</a></div>
+<div class="reviews">
+<div class="rev"><div class="rev-stars">★★★★★</div><div class="rev-txt">"רמה אחת מעל"</div><div class="rev-author">- יצחק פנחסי</div><div class="rev-src">Google · בת מצווה</div></div>
+<div class="rev"><div class="rev-stars">★★★★★</div><div class="rev-txt">"התוצאה מושלמת. כל הנוכחים פה אחד"</div><div class="rev-author">- גילה ניסניאן</div><div class="rev-src">Google · יום הולדת 70</div></div>
+<div class="rev"><div class="rev-stars">★★★★★</div><div class="rev-txt">"חוויה מדהימה, מקצועי מאוד"</div><div class="rev-author">- רינה ארליך</div><div class="rev-src">Google · הקלטת שיר</div></div>
+<div class="rev"><div class="rev-stars">★★★★★</div><div class="rev-txt">"מיקס ומאסטרינג ברמה גבוהה מאוד"</div><div class="rev-author">- ואסיהון ביהונן</div><div class="rev-src">Google · מוזיקאי</div></div>
+</div>
+</div>
+
+<footer class="ftr"><p>© 2025 Yakir Cohen Productions · מודיעין · כל הזכויות שמורות · ט.ל.ח.</p></footer>
+</div><!-- /wrap -->
+<script>
+(function(){
+'use strict';
+const WA='972587555456',F=n=>n.toLocaleString('he-IL');
+
+// ═══ DATE ═══
+const now=new Date();
+const ds=now.toLocaleDateString('he-IL',{day:'numeric',month:'long',year:'numeric'});
+document.getElementById('landingDate').textContent='נכון ל-'+ds;
+document.getElementById('navDate').textContent=ds;
+document.querySelectorAll('.room-dt').forEach(el=>el.textContent='מחירון נכון ל-'+ds);
+
+
+// Trust bar auto-gen
+const clients=['משרד הביטחון','משטרת ישראל','משרד הפנים','עיריית מודיעין','ערוץ 12','גלגלצ','ערוץ הספורט','Radio 102FM','ZARA','האוניברסיטה העברית','בית חולים עין כרם','גולדסטאר','חוות רונית','לאגו','האחוזה'];
+const ltT=document.getElementById('ltTrack');
+if(ltT){let th='';for(let i=0;i<3;i++)clients.forEach(c=>th+='<span class="landing-trust-item">'+c+'</span><span class="landing-trust-item">·</span>');ltT.innerHTML=th}
+
+// ═══ ROOMS ═══
+let currentRoom=null;
+window.goRoom=function(id){
+    document.getElementById('landing').classList.add('hidden');
+    document.getElementById('mainNav').classList.add('show');
+    document.querySelectorAll('.room').forEach(r=>r.classList.remove('on'));
+    if(id==='all'){
+        document.querySelectorAll('.room').forEach(r=>r.classList.add('on'));
+    } else {
+        const r=document.getElementById('room-'+id);
+        if(r)r.classList.add('on');
+    }
+    currentRoom=id;
+    window.scrollTo({top:0,behavior:'smooth'});
+    // Update nav active
+    document.querySelectorAll('.nav-a').forEach(a=>a.classList.remove('active'));
+    // Deep link
+    history.replaceState(null,null,'#'+id);
+};
+window.goHome=function(){
+    document.querySelectorAll('.room').forEach(r=>r.classList.remove('on'));
+    document.getElementById('mainNav').classList.remove('show');
+    document.getElementById('landing').classList.remove('hidden');
+    currentRoom=null;
+    history.replaceState(null,null,window.location.pathname);
+};
+// Deep link on load
+if(window.location.hash){
+    const h=window.location.hash.slice(1);
+    if(['dj','music','events','online','podcast','academy','faq','all'].includes(h)){
+        setTimeout(()=>goRoom(h),300);
+    }
+}
+
+// ═══ SHARE ═══
+window.shareRoom=function(id){
+    const url=window.location.origin+window.location.pathname+'#'+id;
+    const names={dj:'DJ לאירועים',music:'הפקה מוזיקלית',events:'אטרקציות',online:'שירותי אונליין',podcast:'פודקאסט',academy:'אקדמיה'};
+    const text='תסתכל/י על '+names[id]+' של יקיר כהן הפקות:\n'+url;
+    if(navigator.share){navigator.share({title:'יקיר כהן הפקות',text:text,url:url})}
+    else{const m='היי! תסתכל/י על זה:\n'+url;window.open('https://wa.me/?text='+encodeURIComponent(m),'_blank')}
+};
+
+// ═══ ROTATING REVIEWS ═══
+const revs=document.querySelectorAll('.landing-rev');
+let ri=0;
+setInterval(()=>{revs[ri].classList.remove('active');ri=(ri+1)%revs.length;revs[ri].classList.add('active')},4000);
+
+// ═══ B2B ═══
+let b2b=false;
+window.toggleB2B=function(){
+    b2b=!b2b;document.getElementById('b2bT').classList.toggle('on',b2b);
+    document.querySelectorAll('.pr[data-vat="inc"]').forEach(el=>{
+        const base=parseInt(el.dataset.base);if(!base)return;
+        const p=b2b?Math.round(base/1.18):base;
+        const s=el.querySelector('strong');
+        if(s)s.textContent='₪'+F(p);
+        else if(!el.querySelector('.explain'))el.textContent='₪'+F(p);
+    });
+    document.querySelectorAll('.vl').forEach(el=>el.textContent=b2b?'לפני מע"מ':'כולל מע"מ');
+    document.querySelectorAll('.b2b-hide').forEach(el=>el.style.display=b2b?'none':'');
+    document.querySelectorAll('.b2b-show').forEach(el=>el.style.display=b2b?'':'none');
+};
+
+// ═══ THEME ═══
+window.toggleTheme=function(){
+    document.body.classList.toggle('light');
+    document.getElementById('themeT').classList.toggle('on');
+};
+
+// ═══ CART ═══
+let cart=[];
+window.addC=function(btn,nm,pr){
+    if(cart.find(c=>c.nm===nm)){cart=cart.filter(c=>c.nm!==nm);if(btn&&btn.dataset)btn.classList.remove('added'),btn.textContent=btn.dataset.orig||'+ הוסף';renderCart();return}
+    if(btn&&btn.dataset&&!btn.dataset.orig)btn.dataset.orig=btn.textContent;
+    cart.push({nm,pr});if(btn&&btn.classList)btn.classList.add('added'),btn.textContent='✓ נוסף';renderCart();
+};
+window.rmCart=function(i){cart.splice(i,1);renderCart()};
+function renderCart(){
+    const el=document.getElementById('cart');
+    if(!cart.length){el.classList.remove('show');return}
+    el.classList.add('show');
+    document.getElementById('cartN').textContent=cart.length;
+    document.getElementById('cartItems').innerHTML=cart.map((c,j)=>
+        '<div class="cart-item"><span class="cart-item-nm">'+c.nm+'</span><span class="cart-item-pr">₪'+F(c.pr)+'</span><button class="cart-item-rm" onclick="rmCart('+j+')">×</button></div>'
+    ).join('');
+    const t=cart.reduce((a,c)=>a+c.pr,0);
+    document.getElementById('cartT').textContent='₪'+F(t);
+    let m='היי יקיר! 👋\nמעניין אותי:\n';
+    cart.forEach(c=>m+='• '+c.nm+' (₪'+F(c.pr)+')\n');
+    m+='\nסה"כ: ₪'+F(t)+'\nאשמח לסגור!';
+    document.getElementById('cartWA').href='https://wa.me/'+WA+'?text='+encodeURIComponent(m);
+}
+
+// ═══ FX ═══
+window.toggleFx=function(el){el.classList.toggle('on');uFx()};
+function uFx(){
+    const s=document.querySelectorAll('.fx.on'),c=s.length;
+    const bar=document.getElementById('fxBar'),btn=document.getElementById('fxBtn');
+    if(!c){bar.classList.remove('show');btn.style.display='none';return}
+    bar.classList.add('show');btn.style.display='block';
+    let t=0;const ns=[];s.forEach(e=>{t+=parseInt(e.dataset.price);ns.push(e.dataset.name)});
+    let fp=t,sv='';
+    if(c>=3){const bn=Math.floor(c/3),r=c%3,ps=[...s].map(e=>parseInt(e.dataset.price)).sort((a,b)=>a-b);fp=bn*3540;for(let i=c-r;i<c;i++)fp+=ps[i];const d=t-fp;if(d>0)sv='💰 חיסכון ₪'+F(d)+'!'}
+    document.getElementById('fxCount').textContent=c;
+    document.getElementById('fxTotal').textContent='₪'+F(fp);
+    document.getElementById('fxSave').textContent=sv;
+}
+window.fxSend=function(){
+    const s=document.querySelectorAll('.fx.on'),ns=[...s].map(e=>e.dataset.name);
+    let m='היי! מעניין אותי '+ns.length+' אפקטים:\n'+ns.map(n=>'• '+n).join('\n');
+    window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(m),'_blank');
+};
+
+// ═══ WA ═══
+window.waInt=function(nm){
+    const m='היי יקיר! 👋\nמעניין אותי: '+nm;
+    window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(m),'_blank');
+};
+
+// ═══ PODCAST CALC ═══
+const ps={g:0,r:0,raw:false,rush:false};
+window.podD=function(k,d){ps[k]=Math.max(0,Math.min(10,ps[k]+d));document.getElementById(k==='g'?'pGV':'pRV').textContent=ps[k];calcPod()};
+window.podT=function(k,btn){ps[k]=!ps[k];btn.textContent=ps[k]?'✓':'הוסף';btn.style.background=ps[k]?'var(--gld)':'';btn.style.color=ps[k]?'#111':'';calcPod()};
+function calcPod(){
+    const g=ps.g*250,r=ps.r*99,raw=ps.raw?350:0,rush=ps.rush?500:0,t=1980+g+r+raw+rush;
+    document.getElementById('pGP').textContent=g?'₪'+F(g):'-';
+    document.getElementById('pRP').textContent=r?'₪'+F(r):'-';
+    document.getElementById('pRawP').textContent=raw?'₪'+F(raw):'-';
+    document.getElementById('pRushP').textContent=rush?'₪'+F(rush):'-';
+    document.getElementById('pTotal').textContent='₪'+F(t);
+}
+window.podSend=function(){
+    const t=1980+ps.g*250+ps.r*99+(ps.raw?350:0)+(ps.rush?500:0);
+    const desc='פודקאסט'+(ps.g?' +'+ps.g+' אורחים':'')+(ps.r?' +'+ps.r+' Reels':'');
+    addC(null,desc,t);
+};
+
+// ═══ VIDEO ═══
+window.playVid=function(el,id){
+    if(el.classList.contains('playing'))return;
+    el.classList.add('playing');
+    el.innerHTML='<iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1" allow="autoplay;encrypted-media" allowfullscreen style="width:100%;height:100%;border:none;border-radius:var(--rm)"></iframe>';
+};
+
+// ═══ AVAILABILITY ═══
+function seedR(s){return function(){s=(s*16807)%2147483647;return(s-1)/2147483646}}
+const dseed=now.getFullYear()*10000+now.getMonth()*100+now.getDate();
+function buildAvail(cid,base){
+    const c=document.getElementById(cid);if(!c)return;
+    const ms=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+    const cm=now.getMonth();const rng=seedR(dseed+cid.charCodeAt(0));let h='';
+    for(let i=0;i<4;i++){const mi=(cm+i)%12;const sl=Math.max(1,Math.round(base-rng()*base*0.4));
+    h+='<div class="avail-month"><div class="avail-month-nm">'+ms[mi]+'</div><div class="avail-month-slots">'+sl+'</div><div class="avail-month-lbl">פנויים</div></div>'}
+    c.innerHTML=h;
+}
+buildAvail('djAvail',3);
+buildAvail('musicAvail',18);
+
+// ═══ EXIT INTENT ═══
+let exitShown=false,idleTimer;
+function resetIdle(){clearTimeout(idleTimer);if(!exitShown&&currentRoom)idleTimer=setTimeout(()=>{exitShown=true;document.getElementById('exitPop').classList.add('show')},45000)}
+document.addEventListener('mouseout',function(e){if(!exitShown&&e.clientY<5&&!e.relatedTarget&&currentRoom){exitShown=true;document.getElementById('exitPop').classList.add('show')}});
+document.addEventListener('touchstart',resetIdle);document.addEventListener('scroll',resetIdle);resetIdle();
+
+})();
+</script>
+</body>
+</html>
